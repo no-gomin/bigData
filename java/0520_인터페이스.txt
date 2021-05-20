@@ -1,0 +1,18 @@
+## 인터페이스 
+
+이해
+- 작업명세서(작업지시서) : 설계도 / 표준을 제시 / 추상메소드와 상수 만을 멤버로 가질 수 있음
+- 다형성을 가능하게 함
+- 객체를 부속품화 시켜줌.
+
+
+
+
+문법
+- 멤버변수 : public (static final) 이어야 함. ( )는 생략가능.
+- 메소드 : public (abstract) 이어야 함. ( )는 생략가능.
+- 객체생성 불가 but!!! 변수의 타입사용 가능
+- 구현은 implement 되는 클래스에서 함.
+- default 메소드는 생성 가능 (Updated)
+- interface ◀─ interface 의 경우에는 implements가 아닌 extends 
+
