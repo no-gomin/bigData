@@ -1,0 +1,77 @@
+## String의 문제점 : 메모리를 과소비 (데이터에 변화가 생기면 기존것을 버리고 새로 생성)
+-> StringBuffer와 StringBuilder를 사용하자. (기능과 사용법은 동일 / Builder가 속도면으로 더 우수함)
+
+append(String str) : 문자열 str 추가
+insert(int index, String str) : 특정 index에 문자열 str 추가
+delete(int start, int end) : index위치 start부터 end앞 까지 삭제
+deleteCharAt(int index) : index위치의 특정 문자 하나 삭제
+int capacity() : 문자열 크기 반환
+ensureCapacity(int size) : 버퍼의 크기를 size만큼 늘리는 메소드
+trimToSize() : 과도한 버퍼 크기를 적당하게 줄이는 메소드
+
+
+
+
+
+## System.currentTimeMillis() : 1970년도부터 현재까지의 밀리세컨(1/1000초) 단위로 표시 -> 속도측정시 사용
+
+long startMimiis = System.currentTimeMillis();
+작업~~~~~~~~~~~
+long endMimiis = System.currentTimeMillis();
+System.out.println("경과 시간 : "+(endMimiis-startMimiis)+"밀리초");
+
+
+
+
+
+## StringTokenizer : 문자열 분할 (기본적으로 space로 분할, 그외 지정 가능)
+
+
+
+
+
+## Calendar(싱글톤클래스), GregorianCalendar(일반클래스), Date
+// tY (년) tm(월) td(일) ta(요일) tH(24시) tp(오전/오후) tl(12시) tM(분) tS(초)
+// 요일 : 1(일),2(월)~~~, 월 : 0(1월),1(2월)~~~~,  0(AM),1(PM), 
+
+System.out.printf("%1$tY년 %1$tm월 %1$td일 %1$ta요일 %1$tH시 %1$tM분 %1$tS초\n", cal);   // 1$ 사용하여 cal을 한번만
+
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 aa hh시 mm분 ss초");
+	// yyyy(년도 4자리) yy(년도 2자리) M(5) MM(05) d(9) dd(09)
+	// E(요일)  a(오전/오후) H(24시간) h(12시간) m(분) s(초) 
+
+
+
+
+
+## Math
+pow(거듭제곱), abs(절대값), sqrt(제곱근), min(최소값), max(최대값)
+
+ceil(올림), round(반올림), floor(버림),
+// 자바는 소숫점에서만 작업이 가능하다 =>일의자리 이상 계산시, 나누기 곱하기를 활용하여 강제로 소숫점 단위로 변경후 처리해야함.
+
+Math.random();   : 0이상 1미만의 double 난수 생성
+
+
+
+
+
+
+## Random : 일반메소드(객체 생성후 실행가능)
+("0부터 100까지의 난수 : " + random.nextInt(101));  
+("0부터 50까지의 난수 발생 :" + random.nextInt(51));  
+("0부터 20까지의 난수 발생 : " + random.nextInt(21));  
+("int형 전체 범위의 난수 발생 : " + random.nextInt());   
+("float 타입의 난수 발생 : " + random.nextFloat());  
+("double 타입의 난수 발생 : " + random.nextDouble());  
+("long 타입의 난수 발생 : " + random.nextLong());  
+("boolean 타입의 난수 발생 : " + random.nextBoolean());
+
+
+
+
+
+
+
+
+
