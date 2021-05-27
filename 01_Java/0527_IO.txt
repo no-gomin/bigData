@@ -1,0 +1,17 @@
+## 파일 입출력(I/O)
+
+InputStream : 1byte단위 입력 API. 이미지, 동영상 등의 데이터에 주로 사용
+- DataInputStream (효율성을 높이기 위해 보조)
+- (1)파일(스트림)을 연다. (2)read한다. (3)파일을 닫는다.(스트림객체.close)
+
+OutputStream : 1byte단위 출력 API. 이미지, 동영상 등의 데이터에 주로 사용
+- DataOutputStream (효율성을 높이기 위해 보조)
+- (1)파일을 연다.(스트림객체 생성) (2)write한다. (3)파일을 닫는다.(스트림객체.close)
+
+
+
+
+
+
+
+
