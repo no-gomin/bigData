@@ -1,0 +1,9 @@
+## AWT 
+
+사용법 : 컴포넌트 생성(1. 객체선언 - 컴포넌트 부착 2. 객체생성) → 이벤트처리
+
+컴포넌트 배치
+- BorderLayout : East, West, South, North, Center
+- FlowLayout : 왼쪽에서 오른쪽으로, 자리 부족하면 다음줄로, 가운데에
+- GridLayout : 격자 형태
+
