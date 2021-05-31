@@ -1,0 +1,12 @@
+## swing
+
+setDefaultCloseOperation(EXIT_ON_CLOSE);  // 스윙은 x버튼 종료가 간단하게 구현 가능
+
+반드시 컨테이너를 받아서 생성해야 함. 컴포넌트 객체 생성 후에 add하여 화면 조정
+
+JPanel 기본레이아웃이 FloLayout
+
+contenPane 기본레이아웃이 BorderLayout
+
+
+

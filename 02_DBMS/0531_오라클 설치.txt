@@ -1,0 +1,20 @@
+## 오라클 설치
+
+현재 정식 버젼 : Database 19c Enterprise/Standard Editions
+--> 설치 후 삭제가 불가함 + 서버급이라 메모리 차지도 많이함
+
+교육용 버젼 : Database 18c Express Edition
+--> 삭제는 가능하나, 이버젼 역시 용량이 크고 무거움
+
+실제 설치 버젼 : Oracle Database 11g Release 2 Express Edition
+--> 정식버젼에 비해 매우 가벼우며, 기능은 비슷하여 적절함.
+https://www.oracle.com/database/technologies/xe-prior-releases.html 
+
+
+
+
+
+## 설치 후 CMD창에서 실행 가능 
+
+system : 아이디, oracle : 내가 지정한 비밀번호 // 인 경우
+sqlplus system/oracle
