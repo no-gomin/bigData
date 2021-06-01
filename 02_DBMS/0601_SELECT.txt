@@ -1,0 +1,43 @@
+## 오라클 시작하기
+
+1. 오라클 설치 및 cmd창 이동
+2. c:\>sqlplus "/as sysdba
+   c:\>sqlplus system/oracle비번
+           ----시스템권한으로 오라클DB에 접근한다
+   sqlplus system/oracle ----관리자계정으로 접근한다
+3. (18c버전에서는 이 작업도 추가) alter session set "_ORACLE_SCRIPT"=true;
+   SQL>create user scott identified by tiger;
+           --- scott이라는 ID를 만든다.
+4. SQL>grant dba to scott; -- scott을 dba권한으로
+5. SQL>exit
+6. c:/>sqlplus scott/tiger 들어가는 명령
+7. SQL>@c:/demo.sql  화일을 수행 (기본 데이터를 넣는 명령등 모음)
+
+
+
+## SELECT
+
+ALTER SESSION SET NLS_DATE_FORMAT='MM-DD-RR';   -- 날짜 세팅, 연도는 RR 또는 YYYY
+
+||    -- 필드값을 연결
+
+SELECT DISTINCT   -- 중복된 데이터는 1회만 출력
+
+DEPTNO NOT IN (10,20,40);    -- 부서번호가 10,20,40번 부서를 제외한
+
+LIKE 'M%';     -- % : 0글자 이상 / _ :한글자
+
+ORDER BY SAL ASC;     -- 오름차순 정렬 (ASC는 생략가능)
+ORDER BY SAL DESC;    -- 내림차순 정렬
+
+NVL(COMM,0)    -- null value : comm 필드가 null 이면 0으로 변경표시
+
+TO_CHAR(HIREDATE, 'RR-MM-DD')   -- 문자열로 변경
+TO_DATE('81/02/20', 'RR/MM/DD')   -- DATE열로 변경
+
+별칭 : AS "별칭" / "별칭" / 별칭
+
+
+
+
+
