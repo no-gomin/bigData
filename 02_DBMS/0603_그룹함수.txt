@@ -1,0 +1,28 @@
+## 그룹함수
+
+SUM : 그룹의 누적 합계
+AVG : 그룹의 평균
+COUNT : 그룹의 총 개수
+MAX : 그룹의 최대값
+MIN : 그룹의 최소값
+STDDEV : 그룹의 표준편차
+VARIANCE : 그룹의 분산
+
+
+
+
+SELECT column, group_function
+	FROM table
+	[WHERE condition]
+	[GROUP BY group_by_expression]
+	[HAVING   group_condition]
+	[ORDER BY column] ;
+
+
+
+
+ROLLUP : 그룹별 값을 요약하여 출력
+
+
+
+
