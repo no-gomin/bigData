@@ -1,0 +1,15 @@
+## 시퀀스(Sequence) : 순차적인 번호를 자동으로 생성하는 객체
+- 테이블과 독립적으로 생성 및 저장
+- 기본 테이블에서 인조 PRIMARY KEY 생성시 주로 사용
+- 여라 테이블에 공유 가능
+
+CREATE SEQUENCE FRIEND_SEQ 
+  START WITH 1    -- 시작번호
+  INCREMENT BY 1   -- 증감 수치
+  MAXVALUE 9999  -- 최대 번호
+  MINVALUE 1       -- 최소 번호
+  NOCACHE        -- 미리 메모리에 생성여부 결정 (기본값 : 20)
+  NOCYCLE;        -- 최대번호 도달시 처음으로 돌아갈지 여부 결정
+
+
+
