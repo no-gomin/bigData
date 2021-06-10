@@ -1,0 +1,27 @@
+## MySQL
+
+use mysql; -- 데이터베이스에 접속해야만 사용이 가능
+
+
+create table major(
+	mCode int primary key auto_increment, 
+-- 시퀀스 대신 사용, auto_increment일 경우는 반드시 int
+
+
+-- 사번, 이름, 상사이름(상사가 없는 사람도 출력)  // 오라클SQL에서는 상사 사번필드에 (+)
+select w.pno, w.pname, m.pname 
+	from personal w left outer join personal m
+	on w.manager=m.pno;
+
+
+select format(pay, 0) from personal; -- 3자리마다 콤마 
+select format(pay, 2) from personal; -- 3자리마다 콤마, 소수점 2자리
+
+
+-- 6~10등
+select pname, pay from personal order by pay desc limit 5, 5; 
+
+
+-- personal 이름, 급여, 급여가 3000이상인지 아닌지 여부
+select pname, pay, if(pay>=3000, '높다', '낮다') from personal;
+
