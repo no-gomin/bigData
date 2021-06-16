@@ -1,0 +1,35 @@
+## 용어 및 기능
+
+HTML : 웹 문서의 구조 및 정보 // Hyper Text Markup Language의 약자로서 웹문서를 기술하는 언어
+
+CSS : 표현(디자인) 담당 // Cascading Style Sheets의 약자로, HTML문서를 디자인적으로 발전시켜주는 문서
+
+Jaba Script : 동작을 담당 // jQuery
+
+
+
+
+
+
+
+## HTML의 태그 : HTML문서를 구성하고 있는 요소
+
+글자에 관련된 태그 : H1(제목), p(본문), br(개행), a(앵커), b, I, sup, del 태그
+
+목록 태그 : ul(순서 없는), ol(순서 있는) / li(목록 요소)
+
+표 태그 : tr(행), th(열, 제목 셀), td(열, 일반 셀) // 병합 : rowspan, colspan
+
+이미지 태그 : <img src="img/image.jpg" alt="이미지" width="50" height="100">
+
+오디오 태그 : <audio src="sound/sound.mp3" preload="auto" controls="controls" loop="loop"></audio>
+
+
+
+
+
+
+
+
+
+
