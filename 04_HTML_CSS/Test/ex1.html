@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="ex1.css" rel="stylesheet" typeof="text/css" />
+    <style>
+        div {
+            background-color: mintcream;
+            border: 5px solid black;
+        }
+        td {
+            padding:20px;
+            text-align: center;
+        }
+        #header{
+            width:300px;
+            margin:0 auto;
+            text-align:center;
+        }
+        #content {
+            width: 400px;
+            margin: 0 auto;
+            text-align: center;
+            padding:5px;
+        }
+        #hide{
+            background-color:black;
+        }
+        #footer{
+            text-align:center;
+        }
+    </style>
+    <script>
+        function chk() {
+            if (!frm.name.value) {
+                alert('이름을 입력하세요');
+                frm.name.focus();
+                return false;
+            } else if (!frm.id.value) {
+                alert('아이디를 입력하세요');
+                frm.id.focus();
+                return false;
+            } else if (!frm.pw.value) {
+                alert('비밀번호를 입력하세요');
+                frm.pw.focus();
+                return false;
+            } else if (frm.pw.value != frm.pwChk.value) {
+                alert('비밀번호 재입력을 확인하세요');
+                frm.pwChk.focus();
+                frm.pwChk.value = '';
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
+</head>
+<body>
+    <div id="header">
+        <h2>&nbsp고객정보 입력페이지&nbsp</h2>
+    </div>
+    <div id="content">
+        <form name="frm" onsubmit="return chk()">
+            <table>
+                <tr>
+                    <th>이 름</th>
+                    <td>
+                        <input type="text" name="name" size="26" placeholder="한글 2~8글자 가능"
+                                pattern="[가-힣]{2,8}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>아이디</th>
+                    <td>
+                        <input type="text" name="id" size="26" placeholder="알파벳 또는 숫자 4~15글자 가능"
+                                pattern="[a-zA-Z0-9]{4,15}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td>
+                        <input type="password" name="pw" size="26" placeholder="알파벳 또는 숫자 1~15글자 가능"
+                                pattern="[a-zA-Z0-9]{1,15}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 재입력</th>
+                    <td><input type="password" name="pwChk" size="26" /></td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td>
+                        <input type="text" name="email" size="26"
+                                pattern="[a-zA-Z가-힣]+@[a-zA-Z]+(\.[a-zA-Z]+){1,2}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>전 화</th>
+                    <td>
+                        <input type="text" name="tel" size="26"
+                                pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>출신지역</th>
+                    <td>
+                        <select name="hometown">
+                            <option value="none">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                목록에서 선택
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </option>
+                            <option value="seoul">서 울</option>
+                            <option value="incheon">인 천</option>
+                            <option value="daejeon">대 전</option>
+                            <option value="gwangju">전 주</option>
+                            <option value="jeonju">광 주</option>
+                            <option value="chuncheon">춘 천</option>
+                            <option value="daegu">대 구</option>
+                            <option value="busan">부 산</option>
+                            <option value="etc"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>결혼유무</th>
+                    <td>
+                        <input type="radio" name="marriage" value="yes" />유
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="marriage" value="no" />무
+                    </td>
+                </tr>
+                <tr>
+                    <th>자녀유무</th>
+                    <td>
+                        <input type="radio" name="children" value="yes" />유
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="children" value="no" />무
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="입력완료" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="reset" value="입력취소" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="hide">
+        <p></p>
+    </div>
+    <div id="footer">
+            Copyright ⓒ tjoeun co. All rights reserved.
+    </div>
+</body>
+</html>
+
+
