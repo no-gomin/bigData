@@ -1,0 +1,64 @@
+## CSS3 단위들: em, %, px
+16px : 기본값
+.9em : 0.9배
+150% : 1.5배
+
+
+
+## url() : 백그라운드 이미지, 폰트 지정
+
+
+
+## display : inline, block, inline-block, none
+inline-block : inline 속성이면서 height, width속성 가능
+none : 안보이게. 공간도 없어짐.
+
+
+
+## visibility
+visibility:hidden;    /* 안보이게 (공간 O) */
+
+
+
+## opacity
+li:nth-child(1){opacity:1; /* 1:불투명, 0:투명*/}
+
+
+
+## margin과 padding
+* {margin:0; padding:0; /* 페이지 초기화 */}
+
+
+
+## boxing-sizing ; border를 box안으로
+border:10px solid blue;
+	/* border가 width영역에 들어감 = width 가 80px로 줄어듬*/
+box-sizing:content-box; 
+	/* border를 width밖으로(디폴트)*/
+
+
+
+## border
+
+
+
+
+## 글자관련 속성; font-family, font-size, font-weight, font-style,
+                      line-height, text-align, text-decoration
+line-height:300px; 
+	/* 수직 가운데 정렬(line-height용도2) */
+
+
+## position
+position:absolute; /* 절대좌표 지정 */
+position:fixed; /*고정좌표 지정*/
+position:relative; /*상대좌표*/
+
+
+
+## float
+right로 하면 오른쪽이 1번 
+
+
+
+## 웹폰트
