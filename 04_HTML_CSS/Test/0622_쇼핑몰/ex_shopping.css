@@ -1,0 +1,196 @@
+﻿* {
+    margin:0 auto;
+    padding:0;
+}
+
+
+
+header .gnb {
+    background-color: black;
+}
+
+    header .gnb ul {
+        overflow: hidden;
+        margin: 0 auto;
+        width: 1000px;
+    }
+        header .gnb ul li {
+            float: left;
+            list-style: none;
+            line-height: 30px;
+
+            text-align: center;
+            height: 30px;
+            width: 100px;
+            font-weight: bold;
+            
+        }
+            header .gnb ul li a {
+                color: white;
+                text-decoration: none;
+            }
+        
+            
+            header .logo {
+                text-align: center;
+                padding:20px;
+            }
+
+
+header .hitmenu ul {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 1000px;
+}
+header .hitmenu ul li {
+    float: right;
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+    width:110px;
+    border:1px dashed lightgray;
+    text-align:center;
+}
+header .hitmenu ul li:nth-child(4) {
+    border-radius : 10px 0 0 10px;
+}
+    header .hitmenu ul li:nth-child(1) {
+        border-radius: 0 10px 10px 0;
+    }
+    header .hitmenu ul li a {
+        text-decoration: none;
+        color:black;
+    }
+
+
+header .lnb {
+    border-top: 1px dashed black;
+    border-bottom: 1px dashed black;
+}
+
+header .lnb ul {
+    overflow: hidden;
+    text-align: center;
+    margin: 0 auto;
+    width: 1000px;
+}
+        header .lnb ul li {
+            float: left;
+            list-style: none;
+            width: 125px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+            header .lnb ul li a {
+                text-decoration: none;
+                color: black;
+            }
+
+
+
+
+
+
+
+    #content .section1 {
+        overflow:hidden;
+        width:1000px;
+        height:400px;
+        
+        margin:0 auto;
+    }
+        #content .section1 .slide_banner {
+            float: left;
+        }
+        #content .section1 .side_banner {
+            float: left;
+        }
+
+#content .section1 .slide_banner img {
+    width: 685px;
+    padding:20px 5px;
+}
+        #content .section1 .side_banner img {
+            width: 295px;
+            padding:60px 5px;
+        }
+
+
+#content .section2 {
+    width :1000px;
+    margin : 0 auto;
+}
+
+    #content .section2 .hit_product {
+        overflow: hidden;
+        border: 1px solid lightgray;
+        margin-top: 50px;
+    }
+        #content .section2 .hit_product div {
+            float: left;
+            height: 400px;
+            width: 240px;
+            border:1px solid lightgray;
+            margin:5px 3.5px;
+            box-sizing:border-box
+        }
+            #content .section2 .hit_product div img {
+                height: 398px;
+                width: 238px;
+            }
+
+    #content .section2 .md_product {
+        overflow: hidden;
+        border: 1px solid lightgray;
+        margin-top:10px;
+    }
+
+        #content .section2 .md_product div {
+            float: left;
+            height: 400px;
+            width: 240px;
+            border: 1px solid lightgray;
+            margin: 5px 3.5px;
+            box-sizing: border-box
+        }
+
+            #content .section2 .md_product div img {
+                height: 398px;
+                width: 238px;
+            }
+
+
+
+
+
+
+            footer {
+                margin-top: 50px;
+                width: 1000px;
+                overflow: hidden;
+            }
+    footer .office_logo {
+        float:left;
+        width : 200px
+    }
+    footer .office_address {
+        float: left;
+        width : 550px;
+        height:50px;
+        line-height:50px;
+    }
+    footer .shopping_info {
+        color: firebrick;
+        float: left;
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+    }
+    footer .copyright {
+        color: white;
+        background-color: black;
+        clear:both;
+        text-align:center;
+        margin-top:70px;
+    }
