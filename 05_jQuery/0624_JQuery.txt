@@ -1,0 +1,47 @@
+## JQuery 기본
+
+CDN(Content Delivery Network)을 통해 연결 필수 : 중복다운로드 피함
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+## 기본 문법
+
+1) hide() : 숨기기
+
+2) show() : 보이기
+
+3) toggle() : 교차.변환 (숨기기 <-> 보이기)
+
+4) html()  :  해당 선택자 안에 html 태그를 포함하여 삽입
+
+5) text()  : 해당 선택자 안에 text만 삽입 
+
+6) val('변형될 value') : value값 변형
+
+7) css('속성', '속성값') : css 변경
+
+8) each : 배열 처리함수 
+ $(array).each(function (idx, item) {
+        $('body').append('<a href="' + item.link + '">' +
+          item.name + '</a><br>');
+
+9) addClass : 지정한 이름으로 클래스 추가
+
+10) removeClass : 지정한 이름의 클래스 삭제
+
+11) append : 제일 뒤에 추가
+
+12) prepend : 제일 앞에 추가
+
+13) attr : 속성값 가져오기 + 속성값 수정
+$(선택자).attr('속성명') : 속성값 가져오기 // $(선택자).attr('속성명','속성값') : 속성값 수정
+
+14) 이벤트 관련 함수들
+	click(콜백함수)
+	focus(콜백함수)
+	off() : 이벤트 제거
+	trigger() : 강제로 이벤트 발생
+	etc.......

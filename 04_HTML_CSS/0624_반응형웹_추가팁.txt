@@ -1,0 +1,33 @@
+## 규칙과 반응형웹 
+
+@import 규칙 : @import url(‘title.css’);
+
+@media 규칙 : print : 인쇄 용도 // screen : 컴퓨터 스크린을 위한 용도
+
+<meta charset="utf-8" name="viewport"
+        content="width=device-width, initial-scale=1.0,
+        maximum-scale=2.0, minimum-scale=0.7"/>
+@media screen and (min-width:768px) and (max-width:999px)
+뷰포인트 태그 사용후, device의 width에 따라 별도의 css를 줄 수 있다.
+
+
+
+
+
+
+
+## 추가 팁
+
+http://lipsum.com : 많은 양의 더미 텍스트
+
+http://pxtoem.com/ : 단위 변환(px, em, %)
+
+http://placehold.it/ (ex. http://placehold.it/200x100) : 희망크기에 따른 가상의 이미지
+
+http://www.w3.org/ : 월드와이드웹 컨소시엄, 기솔동향 등 정보
+
+http://mediaqueri.es/ : 디바이스 환경에 어울리는 미디어쿼리
+
+W3schools.com : html 정보사이트. 다양한 튜토리얼 경험 가능
+
+http://www.colorpicker.com : 색상 정보 제공
