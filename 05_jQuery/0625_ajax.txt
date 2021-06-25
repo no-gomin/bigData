@@ -1,0 +1,56 @@
+## ajax : 서버와 데이터 교환을 하는 기술
+Ajax를 이용하게 되면 특정부분의 영역에 있는 데이터 수정시 전체 페이지를 로딩하지 않고 서버와 데이터 교환이 가능하다
+
+$(function () {
+      $('button').click(function () {
+        var id = $('#mId').val().trim();
+        // $.ajax(객체)
+        $.ajax({
+          // url : 요청페이지 경로
+          // type : get/post
+          // data : 요청파라미터 값
+          // dataType : 요청결과 데이터 타입(html:기본값, json)
+          // success : 요청성공시 수행할 콜백함수
+          // error : 요청 실패시 수행할 콜백함수
+          url : 'idConfirm.html',
+          type: 'get',
+          dataType : 'html',
+          data: 'mId=' + id,
+          success: function (data) {
+            $('#result').html(data);
+          },
+          error: function (code) {
+            alert(code.status + code.statusText);
+          },
+        });
+      }); // click 함수
+    });// jQuery 부분
+
+
+ 
+
+
+
+## get & post
+
+// $.get(요청페이지(파라미터포함), 콜백함수);
+        $.get('idConfirm.html?mId=' + mId,
+          function (data, status) {
+            // data : 요청 페이지의 결과 데이터
+            // status : 요청 상태 (success, error, ... )
+            if (status == 'success') {
+              $('#result').html(data);
+            } else {
+              alert('실패');
+            }
+
+// $.post(요청페이지, 파라미터객체, 콜백함수)
+        $.post('idConfirm.html',
+          { mId: id },
+          function (data, status) {
+            if (status == 'success') {
+              $('#result').html(data);
+            } else {
+              alert('실패');
+            }
+          }); // post함수

@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table {
+            padding : 0;
+        }
+        td {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+        }
+        .nothing  {
+            background-color: red;
+        }
+        .dduk {
+            background: url('img/dduk.jpg');
+            background-size : 100%;
+        }
+        #answer {width : 303px;}
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(function () {
+            var ddukidx = parseInt(Math.random() * 9);
+            $('td').each(function (idx, item) {
+                $(item).click(function () {
+                    if (ddukidx == idx) {
+                        $('td').removeClass('nothing');
+                        $(this).addClass('dduk');
+                        $('#answer').text('정답입니다.');
+                        $('td').off();
+                    } else {
+                        $('td').removeClass('nothing');
+                        $(this).addClass('nothing');
+                        $('#answer').append('아~~~니~~~에~~~요!<br> ');
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <div id="answer"></div>
+</body>
+</html>
