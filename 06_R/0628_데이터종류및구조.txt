@@ -1,0 +1,88 @@
+## 데이터 종류
+     # 기본데이터타입: (문자,숫자,논리,복소수) = 스칼라타입
+     # factor(남,여), vector, list, matrix, array, data.frame, 날짜, 특별한값(결측치..)
+
+
+
+
+## 기본 데이터 타입 : character, numeric, logical(TRUE:T, FALSE:F), complex
+
+character : 문자, 문자열
+numeric : 정수, 실수 
+logical
+
+class(a) # 타입
+is.character(a) # a변수가 character인지 여부
+as.character(100) # 100을 character로 형변환한 결과 반환
+str(a) # str() R의 내부 구조를 간결하게 표시
+
+
+
+
+## 특별한 값(Null, NA, NaN, Inf)
+
+Null : 값이 없음을 의미
+NA : 결측치
+mean(d) # 평균계산(결측치가 있으면 결측치)
+mean(d, na.rm=TRUE) # 결측치를 제외한 값들의 평균균
+is.na(d) : 결측치인지 아닌지 여부 반환
+complete.case(d) : d변수에 결측치가 아니면 TRUE
+na.omit(d) : 결측치 제외
+
+
+
+
+
+## 팩터(fator) : 범주형데이터, 순서식(미리 정해진 여러개 값 중 하나)
+
+gender <- factor(c('남','여','여','남'), levels=c('남','여'))
+nlevels(gender) # level의 갯수
+levels(gender)  # 카데고리 출력
+gender <- factor(gender, levels=c('남','여')) # 범주형 변수로 변환(추천) 
+
+
+
+
+## 구조형 변수 : 동일 자료형 (ex. 벡터(1차원), 행렬(2차원. 회귀분석 용이), 배열(n차원))
+복합형 변수 : 서로 다른 자료형을 가질 수 있음 (.ex. 리스트, 데이터프레임(cvs))
+
+
+
+
+
+## 벡터 : 동일 자료형
+
+자동 형변환 룰 : 문자 < 복소수 < 숫자 < logical
+names(data) <- c('A열','B열','C열','D열')      # 열의 이름 부여
+2 %in% data      # data에 2가 포함되어 있는지 여부 T/F
+%%      # 나머지 연산
+벡터의 집합 연산 : 합집합(union), 교집합(intersect), 차집합(setdiff), 비교(setequal)
+	# 벡터가 집합은 아니지만, 집합처럼 처리함(특히 비교는 주의필요)
+rep(1:4, times=2, length.out=5, each=2) 
+	 [1] 1 1 2 2 3 3 4 4 1 1
+
+
+
+
+## 리스트 : 복합 구조형(키값 형태로 데이터를 담는 복합 구조형)
+
+student <- list(name='홍길동', age=25)
+student$name     # $를 자주 사용 = student['name']
+studentVect <- unlist(student)     # list를 벡터로 (동일 자료형으로 변환)
+student2 <- as.list(studentVect)       #벡터를 list형으로
+
+
+
+
+## 행렬 
+colMatrix <- matrix(1:15, nrow=5, ncol=3)
+rowMatrix <- matrix(1:15, nrow=5, ncol=3, byrow = TRUE,
+                    dimnames = list(c("R1", "R2", "R3", "R4", "R5"), 
+                                    c("C1","C2","C3")))
+각 행과 각 열에 이름 부여하기 : dimnames, rownames, colnames
+조회시 행렬 형태 유지하기 : drop=FALSE
+
+
+
+
+
