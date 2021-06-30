@@ -1,0 +1,32 @@
+## 파일 입출력
+
+write.table    # write.table(iris, file='outData/iris.csv', sep=',', row.names = FALSE)
+read.table     # read.table('inData/emp.csv', sep=',', header = TRUE, stringsAsFactors = TRUE)
+write.csv       # write.csv(iris, file='outData/iris1.csv', quote = FALSE, row.names = FALSE)
+read.csv        # read.csv('outData/iris1.csv', header = TRUE)
+
+cat
+for(i in 1:nrow(irisSummary)){
+  cat(irisSummary[i,], '\n', file='outData/irisSummary.txt', append = TRUE)
+}
+
+
+
+
+## apply : sum, mean, sd, min, max, median
+# apply(대상자료, 1또는2, 함수)
+
+ - apply : 행렬이나 배열 차원별로 지정한 함수 적용(벡터로 반환)
+ - lapply : list apply (함수를 적용한 결과를 list로 반환)
+ - sapply : lapply와 유사하나 결과를 리스트 대신 행렬, 벡터로 반환
+ - vapply : sapply와 유사하나 FUN의 모든 값이 FUN.VALUE와 호환되는지 확인
+
+
+
+
+
+
+
+
+
+

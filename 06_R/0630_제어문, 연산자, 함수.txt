@@ -1,0 +1,78 @@
+## if
+
+ifelse(num%%2==0, "짝수","홀수")
+
+if(num %% 2 == 0){
+  print(paste(num,"은 짝수입니다"))
+}else{
+  cat(num, "은 홀수")
+
+
+
+## switch() 
+
+switch(2, "red", "green","blue")
+
+
+
+
+## for
+
+x <- c(-2, 5, 4, 8)
+for(i in x){
+  if(i%%2 ==0){
+    count = count +1
+  }
+}
+
+
+
+
+
+## while
+
+i <- 1
+while(i < 6){
+  print(i)
+  i <- i + 1
+}
+
+
+
+
+## repeat 
+
+i <- 1
+repeat{
+  if(i>=6) break
+  print(i)
+  i <- i+1
+}
+# break, next(자바에서의 continue)
+
+
+
+
+
+## 연산자
+10 / 3         # 3.333333 (일반적 나누기)
+10 %% 3     # 1 (나머지)
+10 %/% 3    # 3 (몫)
+
+
+
+## 함수
+
+가변인자함수(매개변수가 가변인) : ... 으로
+     # total <- function(...){
+
+
+
+
+
+
+
+
+
+
+
