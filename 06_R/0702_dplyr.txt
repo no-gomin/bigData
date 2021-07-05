@@ -53,3 +53,6 @@ bind_rows(group.a, group.b)    # 없는 데이터도 행과 행을 합치기 가
 
 
 
+
+
+
