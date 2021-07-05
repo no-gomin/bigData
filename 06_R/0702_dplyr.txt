@@ -1,51 +1,51 @@
-#### dplyr ####
+## dplyr 
 
 
-#  library(dplyr) 
+library(dplyr) 
 
 
-# '%>%' ---> ctrol+shift+m 핫키
+'%>%' ---> ctrol+shift+m 핫키
 
 
-# 조건에 맞는 데이터 추출하기 : filter()
+조건에 맞는 데이터 추출하기 : filter()
 exam %>% 
   filter(class %in% c(1,2) & english>=80)
 
 
-# 필요한 변수 추출하기 : select()
+필요한 변수 추출하기 : select()
 exam %>% 
   select(english, math) %>% 
   head(5)
 
 
-# 정렬하기 : arrange()
+정렬하기 : arrange()
 exam %>%
   arrange(class, desc(math))
 
 
-# 파생변수 추가 : mutate()
+파생변수 추가 : mutate()
 exam %>% 
   mutate(total = math+english+science)
 
 
-# 요약하기 : summarise()
+요약하기 : summarise()
 exam %>% 
   summarise(mean_math = mean(math),
             sd_math   = sd(math)
 
 
-# 집단별로 요약하기 : group_by() + summarise()
+집단별로 요약하기 : group_by() + summarise()
 exam %>% 
   group_by(class) %>% 
   summarise(mean_math = mean(math),
             sd_math   = sd(math))
 
 
-# left_join(group.a, group.b)     # 없는 데이터도 열과 열을 합치기 가능 (NA로 처리됨)
+left_join(group.a, group.b)     # 없는 데이터도 열과 열을 합치기 가능 (NA로 처리됨)
 	= merge(group.a, group.b, all = TRUE)
 
 
-# bind_rows(group.a, group.b)    # 없는 데이터도 행과 행을 합치기 가능 (NA로 처리됨)
+bind_rows(group.a, group.b)    # 없는 데이터도 행과 행을 합치기 가능 (NA로 처리됨)
 	= merge(group.a, group.b, all=T) 
 
 
