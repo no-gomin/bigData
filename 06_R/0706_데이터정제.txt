@@ -1,0 +1,68 @@
+## 결측치(NA) : 중앙값으로 대체
+
+exam$math <- ifelse(is.na(exam$math), round(median(exam$math, na.rm=T)), exam$math)
+exam$english <- ifelse(is.na(exam$english), round(median(exam$english, na.rm=T)), exam$english)
+exam$science  <- ifelse(is.na(exam$science ), round(median(exam$science , na.rm=T)), exam$science )
+
+
+m <- apply(exam[,3:5], 2, median, na.rm=T)
+
+
+exam <- within(exam, { # 결측치 대체를 위한 블록
+  math    <- ifelse(is.na(math), m['math'], math)
+  english <- ifelse(is.na(english), m['english'], english)
+  science <- ifelse(is.na(science), m['science'], science)
+})
+
+
+exam <- exam %>% 
+  mutate(
+    math = ifelse(is.na(math), m['math'], math),
+    english = ifelse(is.na(english), m['english'], english),
+    science = ifelse(is.na(science), m['science'], science)
+  )
+
+
+
+
+
+## 논리적인 이상치 정제 (ex. 성별에 남녀가 아닌 값으로 입력된 경우)
+
+outlier$gender <- ifelse(outlier$gender!=1 & outlier$gender!=2, NA, outlier$gender)
+
+outlier$gender <- factor(outlier$gender, levels=c(1,2), labels = c('남','여')) 
+
+
+
+
+
+## 극단적인 이상치 정제 (ex. 과도하게 높거나 낮은 수치)
+
+# 상하위 0.3% 또는 평균-2.75*표준편차 ~ 평균+2.75*표준편차
+
+lowlimit <- mean(mpg$hwy) - 2.75*sd(mpg$hwy)   # 하향극단치 계산
+highlimit <- mean(mpg$hwy) + 2.75*sd(mpg$hwy)    # 상향극단치 계산
+mpg$hwy[mpg$hwy>highlimit]    # 상향극단치보다 큰값 : 44 41
+mpg$hwy[mpg$hwy<lowlimit]     # 하향극단치보다 작은값 : 없음
+
+
+# boxplot을 이용한 이상치 확인
+
+result <- boxplot(mpg$hwy)$stats
+result[1]   # 하향극단치 경계
+result[5]   # 상향극단치 경계
+mpg$hwy[mpg$hwy>result[5]]   # 상향극단치보다 큰값 : 44 41
+mpg$hwy[mpg$hwy<result[1]]   # 하향극단치보다 작은값 : 없음
+
+
+# 이상치를 결측치로 대체
+
+mpg$hwy <- ifelse(mpg$hwy>result[5] | mpg$hwy <result[1], NA, mpg$hwy)
+
+
+
+
+
+
+
+
