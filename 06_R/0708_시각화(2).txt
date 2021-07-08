@@ -1,0 +1,201 @@
+## barplot : 막대그래프
+
+barplot(VADeaths, main = '버지니아 사망율', font = 2, border = 'red', 
+        legend = rownames(VADeaths), density = 50, angle = c(10, 30, 50, 70, 120), 
+        col = c("powderblue", "slategray4", "darkgreen", "lightsalmon4", "mistyrose"))
+# font : 1 기본값, 2 굵게, 3 이탤릭체, 4 굵은이탤릭체
+# legend : 오른쪽 상단 범례
+# density : 막대그래프 안에 칠할 선 수
+# angle : 빗금 각도
+
+
+
+
+
+## boxplot : 상자그림(상자도표, 사분위수 그래프)
+
+boxplot(InsectSprays$count)
+
+boxplot(count ~ spray, data= InsectSprays, col = pal)
+
+
+
+
+
+## hist : 히스토그램 (도수분포표 - 연속된 데이터의 도수분포)
+
+h <- hist(x, breaks = c(0.5, 1.5, 2.5, 3.5, 4.5), ylim = c(0,3.5)) 
+h
+text(h$mids, h$counts, paste(h$counts, '개', sep = ''), col = 'blue', adj = c(0.5, -0.5))
+# breaks : 구간 / adj 위치 재조정
+
+
+
+
+## pie : 동그라미에 비율을 표시
+
+pie.lang <- c(0.1, 0.3, 0.2, 0.15, 0.1, 0.15)
+names(pie.lang) <- c('c', 'java', 'python', 'R', 'Oracle', 'Hadoop')
+pie(pie.lang, clockwise = TRUE, col = c('red', 'orange', 'yellow', 'green', 'blue', 'navy'))
+
+
+
+
+
+## 저수준 그래프 함수
+
+points(rnorm(100), rnorm(100), pch = 3, col = 'brown')
+
+lines(cars$speed, cars$speed * 3.932 - 17.579, col = 'blue', lty = 'dashed', lwd = 2)
+
+fit <- lm(dist ~ speed, cars)
+abline(fit, col = 'red', lwd = 4, lty = 'dotted')
+# 회귀식 선
+
+text(0,0, 'red', col = 'red', font = 2, cex = 3, adj = c(0,0))
+
+text(1.5, 4, expression(hat(beta) == (x^t) * X^{-1} * X^t*y) , adj=c(0,0))
+# 수식출력
+
+
+
+
+## ggplot2 패키지 함수
+
+library(ggplot2)
+
+ggplot(data, aes(x = , y = )) +
+  Geom함수(어떤 그래프를 그릴지) +
+  labs(제목, x축~y축 label, 서브제목, 출처) +
+  scale함수() +
+  theme() +
+  coord_cartesian()
+
+
+
+
+
+## 산점도, 적합도
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point(shape = 21, color = 'blue', bg = 'red', size = 1, stroke = 2) +
+  geom_smooth(method = 'lm', col = 'red', lwd = 1, lty = 'dotted') +
+  geom_text(label = rownames(mtcars), hjust = 0, vjust = 0, nudge_y = 0.5, size = 3) +
+  labs(title = '차량 무게와 연비와의 관계', subtitle = '(부제목)', x = '차량무게', y = '연비',
+       caption = '출처 : datasets::mtcars')
+# shape : pch와 동일
+# vjust (0위, 1아래), hjust (0우, 1좌)
+
+
+
+
+
+## 히스토그램 : 연속형 자료형에서 도수분포표 (범주형 도수분포는 불가)
+
+str(mpg$displ)
+ggplot(data = mpg, aes(displ, fill = class)) + 
+  geom_histogram(bins = 20, col = 'red', binwidth = 0.2) +
+                 # aes(fill = class), 
+  theme(legend.position = 'bottom', axis.text.x = element_text(color = 'red', size = 5),
+        axis.line = element_line(color = 'black', size = 0.5),axis.title.y = element_blank(), 
+        panel.background = element_rect(fill = 'lightblue', linetype = 'dotted', color = 'black'),
+        plot.background = element_rect(fill = 'lightyellow'))
+# class에 따라 색상을 다르게 하려면, claass는 factor여야 함
+# bins : 빈의 갯수를 지정하지 않으면 30
+# binwidth를 지정하면 binwidth에 따라서 bins 갯수가 설정
+# fill : 히스토그램의 색상
+# col : 히스토그램의 border 색상
+
+
+
+
+
+## 상자도표(boxplot)
+
+library(car)
+ggplot(Salaries, aes(rank, salary, col = rank)) +
+  geom_boxplot(fill = 'lightyellow', notch = TRUE) +
+  geom_point(position = "jitter", alpha = 0.2, color = 'brown', pch = 20) +
+  geom_rug(sides = 'l', col = 'dimgray') # 관측값의 밀도 상태를 축에 표현
+# notch = TRUE : 중위수에 대해 95% 신뢰구간을 표현. 
+
+
+
+
+
+## 바이올린 도표 : boxplot과 밀도도표를 합쳐 
+
+ggplot(singer, aes(x = voice.part, y = height)) +
+  geom_violin(fill='honeydew2') +
+  geom_boxplot(width = 0.3, fill = 'green', noth = TRUE) +
+  geom_point(position = 'jitter', alpha = 0.6, col = 'orange')
+
+
+
+
+
+## 밀도도표
+
+ggplot(mtcars, aes(x=mpg)) +
+  geom_density(aes(fill = cyl)) +
+  theme(legend.position = c(0.7, 0.8))
+
+
+
+
+
+## 추세선(시계열에서 데이터의 흐름 표현)
+
+ggplot(economics, aes(date, unemploy)) +
+  geom_line(col = 'red') + # 추세선
+  geom_smooth(method = 'lm') # 적합도선
+
+
+
+
+
+## 그래프를 파일에 저장
+
+jpeg('iris.jpg', width = 400, height = 400)
+boxplot(iris$Sepal.Length)
+dev.off()
+
+ggplot(iris, aes(Petal.Length, Petal.Width, col = Species)) +
+  geom_point(aes(size = Petal.Width), pch = 2, alpha = 0.5)
+ggsave('outData/iris.jpg')
+# ggplot만 사용 가능
+
+
+
+
+
+## ggplot2에서 차트 분할 출력
+
+library(gridExtra)
+g1 <- ggplot(iris, aes(x = Petal.Width,  y = Petal.Length)) +
+  geom_point()
+g2 <- ggplot(iris, aes(Sepal.Width, Sepal.Length)) +
+  geom_point()
+grid.arrange(g1, g2, ncol = 2, nrow = 1)
+
+
+
+
+
+
+## 산점도 행렬
+
+plot(iris[-5])
+pairs(iris[-5], panel = panel.smooth)
+
+
+
+
+
+
+
+
+
+
+
+
