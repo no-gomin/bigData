@@ -1,0 +1,41 @@
+## t.test : 두 그룹간의 평균 차이가 통계적으로 유의한지 검증
+
+# 일원표본 : 
+a <- ToothGrowth[ToothGrowth$supp == 'OJ', 'len']
+b <- ToothGrowth[ToothGrowth$supp == 'VC', 'len']
+t.test(a,b)
+# p-value(유의확률)가 0.05 미만이면 '귀무가설(의미없음)'을 기각함.
+
+
+
+# 이원표본 : 등분산 검정 (두 집단의 분산이 같은지를 확인)
+var.test(len ~ supp, data = ToothGrowth)
+# p-value가 0.05 미만이면 귀무가설을 기각 -> 등분산성 성립 안됨.
+t.test(len ~ supp, data = ToothGrowth, var.equal = FALSE)
+# p-value가 0.05 이상이므로 귀무가설을 채택
+
+
+
+
+
+
+## ANOVA(분산분석) : 세그룹 이상의 집단 간의 평균 차이가 유의한지 검증
+
+# aov()
+summary(aov(Sepal.Length ~ Species, data = iris))
+# F값(유의확률)이 0.05 미만이면 귀무가설(그룹간 평균이 같다)을 기각
+# 그룹은 factor여야 함. summary로 출력해야 f값 나옴.
+
+
+
+anova(lm(Sepal.Length ~ Species, data = iris)) # 같은 결과
+
+
+
+
+
+
+
+
+
+
