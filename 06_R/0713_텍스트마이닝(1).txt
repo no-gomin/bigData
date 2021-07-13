@@ -1,0 +1,35 @@
+## 텍스트 마이닝 : 문자로 된 비정형 텍스트 데이터로부터 가치있는 정보를 얻어내는 분석
+
+install.packages("rJava")
+install.packages("memoise")
+install.packages("KoNLP") # not available for this version of R
+
+
+
+
+
+## KoNLP 수동 설치하기
+
+1) 구글에서 KoNLP 검색 -> CRAN - Package KoNLP -> archive
+2) 제일 최신버전 KoNLP_0.80.2.tar.gz 다운로드
+3) install.packages("devtools")   우측 package 탭에서 수동으로 install 하기 위해 
+4) KoNLP가 의존하는 package 미리 install
+     install.packages("hash")
+     install.packages("tau")
+     install.packages("Sejong")
+     install.packages("RSQLite")  # 위 3개만으로 안될시에만
+5) 우측의 package탭의 install 도구를 이용하여 KoNLP install
+6) scala-library-2.11.8.jar 검색하여 다운로드 -> ~~library/KoNLP/java 폴더에복사
+
+
+
+
+
+## 사전 사용을 설정하여  명사 추출
+
+library(KoNLP)
+useNIADic() 
+# 사전 설정하기 에러 나면 https://github.com/youngwoos/Doit_R/blob/master/FAQ/install_KoNLP.md 참조
+extractNoun("대한 민국의 영토는 한반도와 그 부속 도서로 한다")
+---> [1] "민국"     "영토"     "한반도와" "부속"     "도서"     "한" 
+
