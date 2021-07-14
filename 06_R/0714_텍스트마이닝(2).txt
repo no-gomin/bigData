@@ -1,0 +1,50 @@
+## 불필요 글자 제거 (trim이 없으니 직접 함수 생성)
+
+gsub('\\W', ' ', txt) # 특수 문자 제거      # txt의 특수문자를 ' '로 변경
+
+str_replace_all(txt, '[ㄱ-ㅎㅏ-ㅣ]+', ' ')      # ㄱ, ㄱㅅ, ㅋㅋ, ㅎㅎ, ㅠㅠ 등을 ' '로 변경
+
+trim = function(str){
+  return(gsub('^\\s+ | \\s+$', '', str)) }    
+# ^ : 문자열의 시작과 매칭  /  $ : 문자열의 끝과 매칭
+# \s : 여백문자 (문자열 안이기 때문에 \\s)
+# + : 1회 이상 (? : 0 또는 1회 / * : 0회 이상)
+
+
+
+
+
+## 명사 추출
+
+nouns <- extractNoun(txt)      # 명사 추출
+wordcount <- table(unlist(nouns))       # 워드카운트(단어별 빈도표) 생성
+df_word <- as.data.frame(wordcount, stringsAsFactors = FALSE) 
+df_word <- rename(df_word, word=Var1, freq=Freq)
+df_word <- filter(df_word, nchar(word)>1)      # 한글자 데이터 삭제
+top20 <- df_word[order(-df_word$freq),][1:20,]      # 자주 출현하는 단어 TOP20
+
+
+
+
+
+## 워드 클라우드
+  # 1) 비정형 text 데이터 확보
+  # 2) 패키지 설치 및 로드(KoNLP, wordcloud)
+  # 3) 확보된 text 데이터 읽어오기 (벡터형태)
+  # 4) 명사 추출
+  # 5) 필요없는 데이터 삭제(특수문자, zz, ㅋㅋ, ㅎㅎ..)
+  # 6) 워드 클라우드 생성 (dataFrame)
+  # 7) wordcloud함수 이용해서 워드클라우드 생성
+
+library(wordcloud)
+wordcloud(words = df_word$word,     # 뿌려질 단어
+          freq = df_word$freq,      # 단어 출현 빈도
+          min.freq = 2,          # 최소 단어 빈도
+          max.words = 200,      # 표현될 최대 단어 수
+          random.order = F,     # 최빈단어가 중앙 배치
+          rot.per = 0.1,        # 회전 단어 비율(90도)
+          scale = c(2, 0.2),     # 단어 크기 범위
+          colors=pal)            # 단어 색상 (  pal <- brewer.pal(9,"Blues")[5:9]  )
+
+
+

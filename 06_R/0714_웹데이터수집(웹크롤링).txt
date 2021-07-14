@@ -1,0 +1,48 @@
+## 필요한 패키지
+library(rvest)
+library(KoNLP)
+library(stringr)
+library(dplyr)
+library(wordcloud)
+library(ggplot2)
+
+
+
+
+## 네이버 영화페이지 연습
+home <- 'https://movie.naver.com/movie/point/af/list.naver'
+page <- 'https://movie.naver.com/movie/point/af/list.naver?&page='
+movie <- NULL
+
+for(i in 1:1000){
+  url <- paste0(page, i)
+  html <- read_html(url, encoding = 'utf-8')
+  
+  nodes <- html_nodes(html, '.movie')
+  title <- html_text(nodes) # 영화제목                           
+  movieInfo <- paste0(home, html_attr(nodes, 'href')) # 영화URL
+  
+  nodes <- html_nodes(html, '.list_netizen_score em')
+  point <- html_text(nodes) # 영화점수
+  
+  nodes <- html_nodes(html, '.title')
+  review <- html_text(nodes)
+  review <- gsub('\t', '', review)
+  review <- gsub('\n', '', review)
+  review <- unlist(strsplit(review, '중[0-9]{1,2}'))[seq(2,20,2)]
+  review <- gsub('신고', '', review) # 영화리뷰
+  
+  df <- data.frame(title, movieInfo, point, review)
+  movie <- rbind(movie, df)
+}
+
+write.csv(movie, 'outData/movie_review.csv')
+
+
+
+
+
+
+
+
+
