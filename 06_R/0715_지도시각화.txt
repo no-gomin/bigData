@@ -1,0 +1,49 @@
+## 정적 이미지 지도시각화
+
+library(ggmap)
+daegu <- c(left=123.4423013, right=131.601445, top=38.8714354, bottom=32.828306)
+map <- get_stamenmap(daegu, zoom=7, maptype = 'terrain')
+layer1 <- ggmap(map)
+layer1
+layer2 <- layer1  + geom_point(data=df, aes(x=lon, y=lat, color=factor(tot_pop),  size=factor(tot_pop)))
+layer2
+layer3 <- layer2 + geom_text(data=df, 
+                             aes(x=lon, y=lat, label=region), size=2)
+layer3
+
+
+
+
+
+## 인터랙티브한 지도 시각화
+
+library(ggiraphExtra) # 지도시각화를 위한 패키지(인터렉티브 지도)
+library(mapproj) # ggChoropleth 함수 사용을 위한 패키지
+library(maps)   # 지도 정보 이용
+library(tibble) # 행이름을 변수로 하기 위한 작업
+library(ggplot2) # map_data("state") 미국 주별 위도 경도 데이터 
+
+crime$state <- tolower(crime$state) # 주이름을 다 소문자로
+state_map <- map_data("state") # 미국 지도 주의 위도 경도 가져오기
+ggChoropleth(data=crime, # 지도에 표현할 데이터
+      aes(fill=Murder,   # 지도에 채워질 변수
+          map_id=state), # 지도에 나타날 지역
+      map = state_map,   # 위도, 경도 지도 데이터
+      interactive = TRUE)
+
+
+
+
+
+## 대한민국 지도 시각
+
+install.packages("stringi")
+install.packages("devtools")
+devtools::install_github("cardiomoon/kormaps2014")
+# 에러나면 Rtools 4.0을 설치(cran.r-project.org)
+library(kormaps2014)
+
+
+
+
+
