@@ -1,0 +1,50 @@
+## 주피터 노트북 사용법
+
+shift + Enter : 포커스된 셀이 실행되고 커서가 다음셀로 이동
+Enter키를 누르면 다시 편집 상태로 돌아옴
+alt + Enter : 포커스된 셀이 실행되고 다음 셀이 생성된 후 다음 셀로 이동
+ctrl + Enter : 포커스된 셀이 실행되고 포커스 이동없음
+
+
+
+
+
+
+## ESC키를 누르고 핫키
+
+dd : 셀 삭제
+a : 윗셀 추가
+b : 아랫셀 추가
+m : 마크다운 셀(문서셀)로 변경
+y : 코드 셀(소스셀)로 변경
+h : 핫키 안내
+
+
+
+
+
+## 마크다운
+
+코드와 함께 문서화 할 수 있음 
+다양한 문서화 문법이 있음
+
+
+
+
+
+## 기타
+
+바로가기 파일의 속성에서 "%USERPROFILE%/" 를 폴더를 원하는 소스폴더 "src" 로 변경
+
+아타콘다 prompt 에서 아래 명령어를 사용하여 확장팩 설치
+pip install jupyter_contrib_nbextensions && jupyter contrib nbextension install
+
+자주 사용하는 확장팩 (Edit > nbextensions config 에서.. (또는 http://localhost:8888/nbextensions)
+1. Code prettify : 코드를 예쁘게 정리. 불필요한 여백을 없애거나 공간 띄움
+2. Table on Contents(2) : 마크다운 해더 수준에 따른 목차 생성
+3. Variabel Inspector: 현재 변수와 변수값(변수들을 트래킹하는 익스텐션)
+4. Autopep8 : 자동 코드 정리기능(코드가 지저분한 경우, 망치모양 버튼을 클릭하면 PEP 8 스타일 가이드에 맞게 코드를 자동으로 정리)
+5. CodeFolding : 긴코드를 접을 수 있게 해줘서 함수나 반복문, 조건문 등에서 코드를 접어 놓을 수 있어 관리가 편함
+6. Execute Time : 셀이 돌아가는 시간 측정
+
+
