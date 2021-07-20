@@ -1,0 +1,45 @@
+## 문자열 다루기
+
+- 문자열 슬라이싱 문자변수[from:to:by]
+- len(문자열)
+- upper() 대문자로
+- lower() 소문자로
+- title() 각 단어의 앞글자만 대문자로
+- capitalize() 첫문자만 대문자로, 그외는 소문자
+- count('찾을 문자열') '찾을 문자열'이 몇개들어있는지 갯수 반환
+- find('찾을 문자열') '찾을 문자열'이 왼쪽부터 시작하여 몇번째 index에 있는지 index를 반환
+- rfind('찾을 문자열') '찾을 문자열'이 오른쪽부터 시작하여 몇번째 index에 있는지 index를 반환
+                       ('찾을 문자열'이 없으면 -1을 반환)
+- startswith('특정 문자열') '특정 문자열'로 시작하는지 여부 반환
+- endswith('특정 문자열') '특정 문자열'로 끝나는지 여부 반환
+- strip() 좌우 공백 제거(trim)
+- rstrip() 오른쪽 공백 제거
+- lstrip() 왼쪽 공백 제거
+- split() 문자열을 공백이나 다른 문자 기준으로 나누어 리스트로 반환
+- isdigit() 문자열이 숫자 문자열인지 반환
+- islower() 문자열이 소문자인지 여부 반환
+- isupper() 문자열 대문자인지 여부 반환
+- replace(oldStr, newStr) 처음 나오는 oldStr을 newStr로
+- replaceAll(oldStr, newStr) 문자열내에 나오는 모든 oldStr을 newStr로
+
+
+
+
+
+
+## 날짜 다루기
+
+from datetime import date
+someday = date(2021, 7, 20)
+someday
+---> datetime.date(2021, 7, 20)
+
+from datetime import time
+t = time(13)
+print(t)
+print('{:%Y년%m월%d일 %H:%m:%S}'.format(t))
+---> 13:00:00  // 1900년01월01일 13:01:00
+
+
+
+

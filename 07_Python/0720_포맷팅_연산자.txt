@@ -1,0 +1,44 @@
+## 날짜 출력
+
+from datetime import datetime
+thatday = datetime(2021, 7, 20, 13, 4, 0)
+
+from time import strftime # time모듈안의 strftime함수 적용
+strftime("%Y년 %m월 %d일 %H시 %M분 %S초".format(thatday))
+
+from time import localtime
+now = localtime() # 현재의 날짜와 시간
+
+
+
+
+
+
+## 연산자
+
+할당연산자 : = += -= //=
+a //=2   # a = a // 2 로 할당
+
+논리연산자 : &, |, and, or, not
+1. 숫자와 숫자의 논리연산은 비트연산
+2. 비교연산자보다 논리연산자가 우선순위가 높음
+3. 논리연산자에 문자열이 오면 에러
+4. and : 거짓이면 첫번째 항 반환, 모두 참이면 마지막 항 반환
+5. or : 참이면 첫번째 항 반환, 모두 거짓이면 마지막 항 반환
+6. 주피터 노트북에서는 ! 는 cmd명령행 실행의 의미 (논리 반전은 not True / not False)
+
+비교연산자 : ==, !=, >=, ....
+1. 문자는 아스키 코드 순으로 비교 : 특수문자 < 숫자문자 < 대문자 < 소문자
+2. not의 비트연산자 : ~
+3. x^y(XOR) : 둘중 하나만 1이면 1, 둘이 같으면 0(ex. 00->0 / 01 -> 1)
+
+isinstance(a, float) # a변수가 float형인지 여부 반환
+
+
+
+
+
+
+
+
+
