@@ -30,7 +30,7 @@ numbers[::-1] # 제일뒤~제일앞 모든 데이터
 
 
 
-## 람다식을 이용하여 list 데이터 접근
+## 리스트 컴프리헨션을 이용하여 list 데이터 접근
 
 [data for data in numbers]  # 모든 데이터 가져오기
 [x for x in numbers if x>=10]  # 10이상의 데이터 가져오기

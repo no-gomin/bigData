@@ -1,0 +1,38 @@
+## 딕셔너리
+
+'name' in my_dic  # 딕셔너리에서의 in 연산자는 키가 있는지 여부를 반환 = True/False
+new_my_favorite = my_favorite # 할당 (주소가 복사 = 데이터 같이 수정됨)
+new_my_favorite = my_favorite.copy() # 복제
+
+
+
+
+
+
+## 셋
+
+s1 = set([1,2,3,1])  # 생성 방법1
+fruits = {'apple','orange', 'banana','banana'}   # 생성 방법2
+
+중복 허용하지 않는 집합 (순서X)  -> 교집합, 합집합, 차집합 가능
+s2.add(5)   #  기본자료형은 add로 추가 (list, dictonary 는 update로 추가)
+
+
+
+
+
+
+## enumerate : 반복자 또는 순서 객체로 반복문을 처리할 때 인덱스 처리를 해결하는 함수
+
+L = ['길자','순자','길동']
+for idx, name in enumerate(L):
+    print("{} : {}".format(idx, name))
+
+dic = {'name':'홍길동', 'age':35, 'address':'서울시 마포구'}   
+for idx, (key, value) in enumerate(dic.items()):      # 주의 : (key, value)
+    print("{}번째 {}키 값은 {}".format(idx, key, value))
+
+
+
+
+
