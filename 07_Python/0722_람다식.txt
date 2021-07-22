@@ -1,0 +1,60 @@
+## 람다식
+
+- 람다식은 작은 익명함수를 의미
+- 실행할 문장을 한문장만 작성할 수 있음
+- return 구문이 없이도 statement 결과를 반환
+- 리스트 컴프리헨션과 같이 참조
+- filter(), map()함수 같이 참조
+- 함수의 인수로 전달할 때나 함수를 return할 때 가장 많이 사용됨
+
+
+
+
+## 람다식 : return 한줄짜리 작은 익명함수
+
+# def add(a, b):
+#    return a+b
+(lambda a, b : a + b)(10, 2)   # 12가 반환
+add = lambda a, b : a + b
+
+
+
+
+
+## 함수의 매개변수(인수)에 람다식 사용
+
+list_data = [1,2,3,4,5,6,7,8,9]
+map_template(lambda x : x*2, list_data)   # [2, 4, 6, 8, 10, 12, 14, 16, 18] 반환
+
+list(map(lambda x : x*2, list_data))   # map 함수 이용 (위와 반환값 동일)
+[x*2 for x in list_data]    # 리스트 컴프리헨션 이용 (위와 반환값 동일)
+
+
+list_data = [1,2,3,4,5, ]
+filter_tamplate(lambda x : x%2==0, list_data)    # [2, 4] 반환
+
+list(filter(lambda x : x%2==0, list_data))   # filter 함수 이용 (위와 반환값 동일)
+[x for x in list_data if x%2==0]    # 리스트 컴프리헨션 이용 (위와 반환값 동일
+
+
+
+
+## 리턴문에 람다식 이용
+
+def make_box1(shape):
+    if len(shape) == 1 :
+        return lambda init_value : [init_value] * shape[0]
+    elif len(shape) == 2 :
+        return lambda init_value : [ [init_value]*shape[1] ] * shape[0]
+box2d = make_box1([2,3])    
+--> box2d = lambda init_value : [ [init_value] * 3 ] * 2
+box2d(4)
+--> 반환값 : [[4, 4, 4], [4, 4, 4]]
+
+
+levelChk = lambda score : "A등급" if score>=80 else ('B등급' if score>=70 else "유급")
+# else 안에 ('값' if ~~ else~~ )를 계속 넣을수 있음
+
+
+
+

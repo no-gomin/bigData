@@ -1,0 +1,72 @@
+## 기본값을 갖는 매개변수
+
+def make_url(ip, port = 80):
+    return "http://{}:{}".format(ip, port)
+
+
+
+
+## 기본변수를 갖는 매개변수
+
+i = 5
+def func2(arg = i):  # 스칼라변수(문자, 숫자 논리)이면 함수가 정의되는 지점의 변수값으로 고정
+    print(arg)
+
+list_ = []
+def func3(a, L = list_):  # 리스트, 셋, 딕셔너리 또는 객체일때는 그값이 매번 호출되어 공유함.
+    L.append(a)
+    return L
+
+
+
+
+## 순서인수, 키워드인수(기본값 갖는 인수) 
+
+def func5(a, L=None):   # 순서 : 키워드인수, 순서인수
+    if L is None:   # 리스트를 입력하지 않으면 새로운 리스트 생성
+        L = []
+    L.append(a)
+    return L
+
+
+
+## 튜플 매개변수를 이용한 가변인수 설정 ( * : (1, 2, 3, .....) )
+
+def concat(*args, sep='/'):    # 순서 : 순서인수 > 튜플인수 > 키위드인수
+    return sep.join(args)
+concat('Java', 'Oracle', 'Python')
+concat('Java', 'Oracle', 'Python', sep=' ~ ')
+
+
+
+
+
+## 딕셔너리 매개변수 ( ** : (key : value) )
+
+def func6(**args):     # 순서 : 순서인수 > 튜플인수 > 딕셔너리인수
+    for key, value in args.items():
+        print("{} : {}".format(key, value))
+func6(name="홍길동", age=20, address="서울시")
+
+
+
+
+## 매개변수의 순서 : 순서인수 > 튜플인수(*) > 키워드인수(기본값) > 딕셔너리인수(**)
+
+def func(a, b, c, *d, e=10, **f):
+      ~~~~~
+
+
+
+
+
+## 인수의 언패킹 : 함수 사용시 * 또는 ** 를 넣어서 사용
+
+add(1,2,3,4,5,6,7,8,9)
+add(*numbers)   # 튜플 언패킹(*)
+
+info = {'height':100, 'width':200, 'shape':'rect'}
+func(**info)   # 딕셔너리 언패킹(**)
+
+
+
