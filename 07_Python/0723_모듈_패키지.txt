@@ -1,0 +1,46 @@
+## 모듈 사용하기
+
+import A                      #  A 모듈을 가져옴
+import A as B                #  A 모듈을 B이름으로 가져옴
+from A import B             #  A모듈안의 B함수(A패키지안의 B모듈)을 가져옴
+from A import B as C       #  A모듈안의 B함수(A패키지안의 B모듈)을 C이름으로 가져옴
+from A.B import C           #  A패키지안의 B모듈의 C함수를 가져옴
+from A.B import C as D     #  A패키지안의 B모듈의 C함수를 D이름으로 가져옴
+
+
+
+
+
+## 사용자 정의 모듈
+
+import sys
+sys.path.append('C:/bigdata/src/pylib')   # 실제 패키지가 저장된 폴더주소를 추가
+
+import fibonacci   # C:/bigdata/src/pylibfibonacci.py 
+
+
+
+
+
+## 패키지
+
+sample_pac/ ---> __init__.py
+sample_pac/ab ---> __init__.py  /  a.py  /  b.py
+sample_pac/cd ---> __init__.py  /  c.py   (c안에 from .. ab import a)
+
+- sample_pac 패키지를 import 한다고 ab, cd 하위패키지가 import되지 않음
+- import * : __init__.py 안에 __all__ = ["a",...] 를 넣어 모듈을 동시에 여러개 로드
+- c를 import 하면 로드되는 것 :  패키지(sample_pac, cd, ab), 모듈(c, a)
+- ..상위폴더   /  .현재폴더
+
+
+
+
+## 패키지 설치 및 삭제
+
+pip install 패키지명 (또는 conda install 패키지명)
+python -m pip install whl파일명
+
+pip uninstall 패키지명 (또는 conda remove 패키지명)
+
+
