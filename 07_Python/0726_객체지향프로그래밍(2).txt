@@ -1,0 +1,18 @@
+## static 변수(정적변수) : 여러 객체들 사이에 데이터를 공유하고 싶을 때 사용
+
+class Person :
+    __count = 0    # static 변수
+    def __init__(self) :
+        Person._Person__count += 1   # 클래스명._클래스명__static변수명
+    def __del__(Self) :
+        Person._Person__count -= 1
+    @classmethod
+    def get_count(cls) :
+        return Person._Person__count   # 클래스명._클래스명__static변수명
+print(Person.get_count())   # 클래스명.클래스메소드
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+## 예외처리 : 예외가 날 가능성이 있는 부분에 대해 미리 그에 대한 처리를 하는 것
+
+ex. 파일을 다룰 때, 파일이 없거나 쓰기 금지로 인한 오류
+ex. 데이터베이스 프로그래밍 시 제약조건 등에 의한 데이터 베이스 서버 오류
+ex. 네트워크 프로그래밍 시 네트워트 연결 실패로 인한 오류
+ex. 리스트나 튜플의 인덱스를 벗어난 참조로 인한 오류
+
+
+
+
+try :
+    예외가 발생할 가능성이 있는 문장
+except Error1:
+    해당 예외가 발생할 경우 실행할 문장
+except Error2 as e:
+    해당 예외가 발생할 경우 실행할 문장
+except (Error3, Error4):
+    해당 예외가 발생할 경우 실행할 문장
+except Exception :    # Exception 는 생략가능
+    예외가 발생했을 경우 실행할 문장
+else : 
+    예외가 발생하지 않았을 경우 실행할 문장
+finally : 
+    예외 발생 여부와 상관없이 반드시 실행할 문장
+
+
+
+
+
+## 예외 생성하기
+
+class LengthZeroError(Exception):
+    pass
+def insert(data):
+    if len(data) == 0:
+        raise LengthZeroError("매개변수의 길이가 0")
+print(insert([])) # 예외 발생
+
+
+
+
+
+## 추상클래스 : 파이썬은 추상클래스를 생성할 수 없으나 raise를 이용해서 흉내냄
+
+class Shape:
+    def calc_area(self):
+        raise NotImplementedError
+---> Shape를 부모로 상속하는 클래스는 calc_area를 실행시 오류 발생
+
+

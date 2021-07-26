@@ -1,0 +1,76 @@
+## 파일에 데이터 저장하고 불러오기
+
+with : 마지막 close()가 불필요하게 해주는 구문
+'r' : 읽기용
+'w' : 쓰기용 (기존에 파일이 있으면 덮어쓰기)
+'a' : 쓰기용 (기존에 파일이 있으면 내용 추가)
+
+
+
+
+## 피클링 (import pickle)
+
+with open('data/ch09_member.data','wb') as f:
+    pickle.dump(user_list, f)    # 파일 저장
+
+with open('data/ch09_member.data','rb') as f:
+    ul = pickle.load(f)    # 파일 읽기
+
+
+
+
+## csv 읽기 / 쓰기 (import csv)
+
+with open('data/ch09_member1.csv','r',encoding='UTF-8') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)     # 파일 읽기
+
+
+with open('data/ch09_member2.csv','w', encoding='UTF8', newline='') as f:
+    writer = csv.writer(f)
+    for user in user_list:
+        writer.writerow(user)   # 파일쓰기
+# newline을 기본값으로 두면, 개행이 2번됨.
+
+
+with open('data/ch09_member3.csv','r',encoding='utf-8') as f:
+    dict_reader = csv.DictReader(f)
+    for row in dict_reader:
+        print(row['name'], row['age'], row['email'], row['address'])
+# header가 있는 경우 딕셔너리로 읽기
+
+
+with open('data/ch09_member1-1.csv','r',encoding='CP949') as f:
+    dict_reader = csv.DictReader(f, fieldnames=['Name','Age','Email','Address'], restkey='job')
+    for row in dict_reader:
+        print(row['Name'],row['Age'],row['Email'],row['Address'],row['job'][0])
+# header가 없는 경우 딕셔너리로 읽기
+
+
+import pandas as pd
+member = pd.read_csv('data/ch09_member3.csv', encoding='utf-8')
+# csv 파일을 데이터 프레임으로 읽기
+
+
+user1 = {'name':'홍길동','age':20}
+user2 = {'name':'박길동','age':23}
+user_list = [user1, user2]
+with open('data/ch09_member4.csv','w',encoding='UTF-8', newline='') as f:
+    dict_writer = csv.DictWriter(f, fieldnames=['name', 'age'])  # ['name', 'age'] = list(user1.keys())
+    dict_writer.writeheader()    # header 한줄 쓰기
+    dict_writer.writerows(user_list)
+# 딕셔너리를 csv 파일로 저장
+# extrasaction='ignore' 를 넣으면 fieldname에 없는 필드는 무시
+
+
+
+
+
+
+
+
+
+
+
+
