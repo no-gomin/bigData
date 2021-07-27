@@ -1,0 +1,88 @@
+## JSON 데이터 저장하고 불러오기 (dump, load)
+
+import json
+
+# JSON 파일안의 데이터 모양
+[
+ {'location':'서울',
+  'date':'2021-07-27',
+  'time':0,
+  'temperature':33},
+ {'location':'천안',
+  'date':'2021-07-27',
+  'time':0,
+  'temperature':35}
+]
+
+
+
+
+# 딕셔너리 리스트를 json 파일로 저장 (ensure_ascii=False 없으면? 한글이 유니코드로 저장)
+import json
+with open('data/ch09_member1.json','w') as jsonfile:
+    json.dump(data, jsonfile, ensure_ascii=False, indent=' ')
+
+
+
+# 객체 리스트를 json 파일로 저장
+def as_dict(self): # Member 객체를 dictionary로 반환 함수
+        return {"name":self.name, "age":self.age, "email":self.email, "address":self.address}
+with open('data/ch09_member2.json', 'w', encoding='UTF8') as jsonfile:
+    json.dump(member_list, jsonfile, ensure_ascii=False, indent='\t', default=Member.as_dict)
+
+
+
+# json 파일을 딕셔너리 리스트로 load
+with open('data/ch09_member2.json','r', encoding='utf-8') as jsonfile:
+    member_list = json.load(jsonfile)
+
+
+
+
+# json파일을 객체 리스트변수로 load
+def as_member(dic): # dictionary를 객체로 반환 함수(json파일 => 객체리스트)
+    return Member(dic['name'], dic['age'], dic['email'], dic['address'])
+with open('data/ch09_member2.json','r', encoding='UTF8') as jsonfile:
+    member_list = json.load(jsonfile, object_hook=as_member)
+
+
+
+# json 파일을 DataFrame으로
+import pandas as pd
+member = pd.read_json('data/ch09_member2.json', encoding="utf-8")
+
+
+
+
+## HDF5 파일 읽기/쓰기(딕셔너리, 데이터프레임)
+
+import seaborn as sns
+iris_df = sns.load_dataset("iris")
+iris_dic = iris_df.to_dict() # 데이터프레임변수를 딕셔너리변수로 형변환
+
+
+
+
+# iris_dic(딕셔너리)를 hdf5파일로 쓰기
+import h5py
+with h5py.File('data/ch09_iris.hdf5','w') as f:
+    for group, value in iris_dic.items():
+        grp = f.create_group(group)
+        for key, data in value.items():
+            grp.create_dataset(str(key), data=data)
+
+
+
+
+# iris_df(데이터프레임)을 hdf5파일로 쓰기
+iris_df.to_hdf('data/ch09_iris2.hdf5', key='iris')
+
+
+
+
+
+# hdf5파일을 데이터프레임 변수로 읽어오기
+iris_df2 = pd.read_hdf('data/ch09_iris2.hdf5', key='iris')
+iris_df2
+
+
