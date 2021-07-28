@@ -1,0 +1,63 @@
+## SQLite 데이터 베이스
+
+import sqlite3
+
+conn = sqlite3.connect('data/ch10_example.db')    # DB연결 생성 (파일이 없으면 빈파일 생성)
+cursor = conn.cursor()    # 커서 객체 반환(SQL문을 실행시키고 결과데이터를 조회하하는데 사용)
+
+conn.commit()   # 反 conn.rollback() DML문에서만 commit
+
+cursor.close()   # 생략 가능
+conn.close()   # 반드시 닫아야함.
+
+
+
+
+
+
+## 오라클 데이터 베이스
+
+pip install cx_Oracle (아나콘다 프롬프트에서...)
+import cx_Oracle
+
+oracle_dsn = cx_Oracle.makedsn(host="localhost", port=1521, sid='xe')
+conn = cx_Oracle.connect("scott", "tiger", dsn = oracle_dsn)
+    # 에러발생시 VC_redist.x64.exe 인스톨
+    # 또는 conn = cx_Oracle.connect("scott",'tiger', "localhost:1521/xe")
+cursor = conn.cursor()
+
+
+
+# 각 필드 특징 정보 (필드명, type, display_size, 정확도, scale, nullable.....)
+cursor.description
+data_df.columns = [row[0] for row in cursor.description]   # 필드명을 열제목으로
+
+
+
+
+
+
+# 파라미터 사용하기 : named 방법 (추천)
+
+cursor.execute("SELECT * FROM MEMBER WHERE NAME =  :name ", {'name' : input_name})
+members = cursor.fetchall()   # all() 모두(튜플 list), one() 한행씩(튜플), many(n) n행만
+
+# 아래는 qmark 방법임 (비추천)
+
+cursor.execute("SELECT * FROM MEMBER WHERE NAME IN (?, ?)", (name1, name2))
+
+
+
+
+
+
+## 데이터 베이스 검색 결과를 DataFramd으로
+
+import pandas as pd
+data = cursor.fetchall() # 튜플 리스트
+data_df = pd.DataFrame(data) # 데이터 프레임
+
+
+
+
+
