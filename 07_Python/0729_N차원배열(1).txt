@@ -1,0 +1,60 @@
+## 넘파이 패키지
+
+import numpy as np (주로 np로 사용)
+
+N차원 배열 객체
+
+2차원 배열은 행렬개념으로 이해
+
+패키지 Numpy 이용 (C언어로 구현된 고성능 수치계산 패키지)
+
+C / C++, 포트란 코드의 통합도구
+
+
+
+
+
+
+## 배열 생성 함수
+
+np.array(벡터데이터,dtype=type).reshape(2,2)
+np.zeros(tup) : 요소들이 다 0
+np.ones(tup) : 요소들이 다 1
+ np.empty(tup) : 초기 내용은 임의값인 배열(메모리 상태에 따라 달라짐)
+np.arange(from, to, by, dtype=None)
+np.linspace(from, to, num)
+np.random.normal(0, 1, 100) # 평균0, 표준편차가1인 수 100개 배열
+np.random.random(tup) : 0~1사이의 난수 발생 tup의 i행j열 배열
+
+
+
+
+
+## 배열 생성 특징
+
+배열 생성시 dtype가 자동 생성됨. 생성후 dtype을 변경하면 데이터의 변형이 생길 수 있음.
+
+b[0,2], b[0, 0:6]   # 넘파이 배열에서의 인덱싱. 리스트처럼 b[0][2]로도 가능
+
+깊은 복사 : 기본값임(copy=True) / False로 변경하더라도 dtype이 바뀌면 깊은 복사가 됨
+
+.T (또는 .transpose() ) 를 통하여 전치행렬(행과 열을 거꾸로)을 출력
+
+reshape 로 배열 모양 변경시 -1을 사용하면 해당 차원의 크기가 자동 계산 (resize는 -1 사용불가)
+
+
+
+
+
+## 배열 인쇄 (배열이 너무 크면, 제일 앞과 뒷부분만 출력됨)
+
+import sys
+np.set_printoptions(threshold=10000)   # 10000까지 출력
+np.set_printoptions(threshold=sys.maxsize)   # 시스템상 가능한 곳까지 출력
+np.set_printoptions(threshold=np.inf)      # np.inf(무한대)까지 출력
+
+
+
+
+
+
