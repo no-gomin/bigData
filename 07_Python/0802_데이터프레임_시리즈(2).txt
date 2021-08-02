@@ -1,0 +1,79 @@
+## 데이터프레임의 요소 삭제, 추가
+
+member_df.drop(행 또는 열 이름)   # axis=0은 행, 1은 열, inplace=True 바로 삭제 // 여러개도 가능
+
+member_df['BirthYear'] = 2000   # 모든 행에 2000 입력
+member_df['BirthYear'] = pd.Series([2001,2002,2000])    # 아래쪽 부족한 행은 NaN(float타입)
+member_df['BirthYear'] = pd.Series([2001,2002,2000], index=[0,2,3])   # 0,2,3인덱스에 삽입
+
+new_series = pd.Series(['파이썬',25,'서울시 강동구'], index=member_df.columns)  # 시리즈 추가
+new_df = member_df.append(dic 또는 df, ignore_index=True)   # 딕셔너리 또는 데이터프레임 추가
+
+
+
+
+
+## 기초 통계 분석
+
+count : NA를 제외한 갯수
+min : 최소값
+max : 최대값
+sum : 합
+cumsum : 누적합
+cumprod : 누적곱
+mean : 평균
+median : 중위값
+std : 표준편차
+var : 분산
+quantile : 분위수(0사분위수, 1사분위수, 중위수, 3사분위수, 4사분위수)
+corr : 상관관계
+cov : 공분산
+corr() : 상관계수 (-1 < 값 < 1 // 1에 가까울 수록 완벽히 일치)
+
+describe : 요약 통계량 
+# (기본은 숫자열만 // include=['float64'], exclude=['bool'] 을 사용하여 필요 불필요 데이터 구분 가능)
+
+
+
+
+
+## 데이터 그룹화 및 집계
+
+iris_df.groupby(['Species'])['Sepal.Length'].sum()    # 종별 Sepal.Length의 합계 // 시리즈로 출력
+iris_df.pivot_table(index='Species', values=['Sepal.Length'], aggfunc='sum')    # 데이터프레임으로 출력
+iris_df.groupby(['Species','Petal.Width']).mean()   # 종별, Petal.Width별 평균
+iris_df.groupby('Species').take([1,11,21,31])    # 종별 1,11,21,31인덱스
+
+# 레이블(원핫인코딩)을 지원하는 패키지
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+iris_df['target'] = le.fit_transform(iris_df.Species)
+
+
+
+
+
+## 데이터 구조 변경 (와일드 포맷 데이터 vs 롱 포맷 데이터)
+
+airqulity.melt(id_vars=['Month','Day'])    # 언피벗팅(와일드 -> 롱 // 열이름 -> 값)
+
+airqulity2 = airquality_melted.pivot_table(index=['Month','Day'],    # 피벗팅(롱->와일드 // 값->열이름)
+	columns=['variable'], values=['value'])    # 행과 열의 레벨에 단계가 생김
+airqulity2 = airqulity2.reset_index(level=['Month','Day'], col_level=1)    # 행이름을 데이터에 편입
+airqulity2.columns = airqulity2.columns.droplevel(level=0)    # 0레벨의 열이름을 삭제
+
+
+
+
+
+## Iris 데이터 가져오는 방법 3가지
+
+from  sklearn import datasets
+iris = datasets.load_iris()
+
+import seaborn as sns
+iris_df = sns.load_dataset('iris')
+
+import pandas as pd
+import statsmodels.api as sm
+iris = sm.datasets.get_rdataset('iris', package='datasets')
