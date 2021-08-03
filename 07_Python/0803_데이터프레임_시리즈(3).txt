@@ -1,0 +1,60 @@
+## pivot_table(), pivot() 함수의 차이
+
+피벗테이블 : 테이블의 요약된 정보 출력 (index, columns, aggfunc, margins)
+피벗 : 데이터 테이블의 구조 변경 (index, columns, values)
+
+
+
+
+## 데이터프레임에 함수적용 시키기
+
+# apply : 행 또는 열 단위로 함수 적용 (데이터프레임이나 시리즈에 적용)
+X.apply(lambda x : x - 10, axis = 1)
+
+# applymap : 각 요소 하나하나 별로 적용 (데이터프레임에서만 가능)
+X.applymap(lambda x : x**2)
+
+# map : 각 요소별로 적용(시리즈에서만 가능)
+X.map(lambda x : (x, x**2), na_action="ignore")   # na~=ignore : 결측치는 연산적용 안되도록
+
+
+
+
+
+## 일괄변경하기 (결측치나 특정값 )
+
+df.fillna(0)  # 모든 결측치를 0으로 변경
+df.fillna(method='ffill')   # pad/ffill : 결측치를 이전값으로, ackfill/bfill : 결측치를 다음값으로
+df.fillna(value={'A':99, 'B':50, 'C':0, 'D':95})   # 열마다 다른 특정값으로 대체
+
+s.replace([0,1], 5)    # 0과1을 5로 변경
+s.replace(range(0,3), range(100, 103))
+df.replace(r'^ba.+$', 'NEW', regex=True)   # 정규표현식 사용하여 특정값 변경
+
+s.where(s>10, -99)   # 조건에 만족하지 않는 값은 -99로(-99, 12), 기본값은 NaN으로 변경
+s.mask(s>10, -99)    # 조건에 만족하는 값을 -99로(8, -99), 기본값은 NaN
+
+df.dropna()   # 결측치가 하나라도 있는 행은 제거
+df.dropna(axis=1, how='all'')    # 열 기준으로 모두 결측치이면 제거
+
+
+
+
+
+## 시리즈(1차원 데이터)   (*데이터프레임 : 2차원데이터)
+
+s = pd.Series([10, 70], index=['apple', 'mango'])   # 생성
+s['apple']    # apple만 조회
+s['apple' : 'mango']     # apple부터 mango까지 조회(mango 포함)
+s['banana'] = 50    # 시리즈에 데이터 추가
+s.drop('mango')    # 시리즈에서 데이터 삭제
+
+s.sort_values(ascending=False)      #값을 기준으로 정렬 : 내림차순(기본값 : 오름차순)
+s.sort_index()     # 인덱스를 기준으로 정렬
+s.to_frame()      # 시리즈를 데이터 프레임으로 변환 (열이름은 0)
+s.to_frame(name='price')     # 열이름에 price 
+
+
+
+
+
