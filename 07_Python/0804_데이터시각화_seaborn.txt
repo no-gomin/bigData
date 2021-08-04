@@ -1,0 +1,94 @@
+## 도움되는 사이트
+
+# 그래프 스타일
+https://seaborn.pydata.org/generated/seaborn.axes_style.html#seaborn.axes_style   
+
+# 컬러 팔레트
+https://seaborn.pydata.org/generated/seaborn.color_palette.html#seaborn.color_palette
+https://matplotlib.org/tutorials/colors/colormaps.html
+https://seaborn.pydata.org/tutorial/color_palettes.html
+http://hleecaster.com/wp-content/uploads/2019/12/article2_image9.png
+
+# Same Stats, Different Graphs
+http://autodeskresearch.com/publications/samestats
+
+# 다중 그래프 FacetGrid
+https://seaborn.pydata.org/tutorial/axis_grids.html#conditional-small-multiples
+
+
+
+
+
+## seaborn
+
+import seaborn as sns
+
+matplotlib을 기반으로 만든 고수준 그래픽 라이브러리 
+    * 공식사이트 : https://seaborn.pydata.org
+    * seaborn API : https://seaborn.pydata.org/api.html
+
+1) 데이터 준비
+2) 미적속성 설정
+3) 함수를 이용하여 그래프 그리기
+4) 그래프 출력, 저장
+
+
+
+
+
+## 미적 속성 설정하기(style, context, palette)
+
+sns.set(style='darkgrid')     # 스타일 지정 : darkgrid, whitegrid, dark, white, ticks
+
+sns.set_context('notebook')    # 비율 지정 : 기본값  notebook 1율, paper 0.8배, talk 1.3배, poster 1.8배
+
+sns.set(palette='Set1', 3)   # 팔레트 지정 : 사이클을 지정할 수 있음
+
+
+
+
+
+## Relational plots : 관계형 그래프
+
+scatterplot, lineplot, relplot(서브플롯제공)
+
+sns.relplot(data=iris, x='petal_length', y='petal_width', hue='species',
+           kind='line',       # 기본값은 scatter
+           col='species',     # col단위로 서브플롯 표현
+           col_wrap=2)      # 한줄에 표현될 서브플롯 수
+
+
+
+
+
+
+## categorical plots : 범주형 그래프
+
+stripplot, swarmplot, barplot, catplot, countplot, pointplot, boxplot, boxenplot, violinplot
+
+sns.catplot(data=titanic, x='sex', y='survived', hue='class',
+           kind='bar',     # 기본값은 strip
+           col='class',     # col단위로 서브플롯 표현
+           col_wrap=2, sharey=False, sharex=False)     # 한줄에 표현될 서브플롯 수
+
+
+
+
+
+
+## 기타 그래프
+
+pairplot   # 쌍관계 그래프
+displot   # 밀도 그래프
+regplot   # Regression plots(회귀 그래프)
+lmplot    # Regression plots(회귀 그래프), hue 기능과 서브플롯 가능
+heatmap    # Matrix plots : 행렬 그래프
+
+FacetGrid    # 다중 플롯 그리드 생성
+g = sns.FacetGrid(iris, col='species', hue='species')
+g.map(plt.hist, 'petal_length')
+
+
+
+
+
