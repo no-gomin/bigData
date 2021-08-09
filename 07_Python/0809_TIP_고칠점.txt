@@ -1,0 +1,41 @@
+## df.columns.str.contains('코드' or '번호')     # 이렇게 하면 안됨. '코드'가 있는 경우 '번호'를 반환하지 않음.
+-> df.columns.str.contains('코드|번호')      # 이렇게 해야함
+-> (cols.str.find('코드') != -1 ) | (cols.str.find('번호') != -1)    # 이렇게 해야함
+
+x or y : x가 거짓이면 y, 그렇지 않으면 x
+x and y : x가 거짓이면 x, 그렇지 않으면 y
+
+
+
+
+
+
+## groupby('상호명')['상호명']     #  이렇게 하면 안됨. '상호명'대신 다른 컬럼을 해야함.
+-> 다른 컬럼과 동일하게 작업이 되기는 함(?). 밑에 Name은 다름.
+
+
+
+
+
+
+## 유용한 팁
+
+np.all(df_pusan.columns == df_seoul.columns)    # concat 전 확인
+np.all(df_pusan.dtypes == df_seoul.dtypes)
+
+df.index = range(df.shape[0])    # concat 후 인덱스 정리
+
+pd.options.display.max_columns = 30    # ... 처럼 생략되지 않고 표시할 열의 수 조정
+
+%load_ext memory_profiler    # 현재 주피터 노트북이 사용하고 있는 메모리 용량
+%memit
+
+시리즈로 반환 : df.상호명  /  df['상호명']  /  df.loc[:,'상호명'] 
+데이터프레임 반환 : df[['상호명']]
+
+pd.read_csv('c:/data.csv', low_memory=False)   
+# pandas가 컬럼타입 추측시 메모리 사용량이 높음 + 대용량 데이터를 불러 올때 오류를 막기 위해
+
+
+
+

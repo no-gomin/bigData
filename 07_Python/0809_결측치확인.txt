@@ -1,0 +1,21 @@
+## missingno
+
+https://github.com/ResidentMario/missingno
+
+pip install missingno
+import missingno as msno
+
+msno.matrix(df)            # 결측치 아닌 데이터가 검게
+msno.bar(df)                # 결측치 아닌 데이터가 bar로 표시
+msno.heatmap(df)         # 결측치가 있는 컬럼에 대해 변수별 상관관계
+msno.dendrogram(df)    # 결측치가 있는 변수들끼리 군집화
+
+
+
+
+
+## 열별 컬럼의 결측치 비율
+df.isna().sum() / df.shape[0] * 100
+
+
+
