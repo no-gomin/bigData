@@ -36,6 +36,6 @@ pd.options.display.max_columns = 30    # ... 처럼 생략되지 않고 표시�
 pd.read_csv('c:/data.csv', low_memory=False)   
 # pandas가 컬럼타입 추측시 메모리 사용량이 높음 + 대용량 데이터를 불러 올때 오류를 막기 위해
 
-
+df.isna().sum() / df.shape[0] * 100    # 열별 컬럼의 결측치 비율   
 
 
