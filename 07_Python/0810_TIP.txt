@@ -1,0 +1,38 @@
+## 개별 기술 통계값 구하기 (count, min, max, sum, mean....)
+
+https://pandas.pydata.org/docs/reference/frame.html#computations-descriptive-stats
+
+argmin, argmax : 최솟값 인덱스, 최댓값 인덱스 반환
+median 중앙값(중간값:데이터를 한 줄로 세웠을 때 가운데 위치하는 값, 중앙값이 짝수일 때는 가운데 2개 값의 평균을 구함)
+std, var 표준편차, 분산을 계산
+cumsum 맨 첫 번째 성분부터 각 성분까지의 누적합을 계산 (0 번째 부터 계속 더해짐)
+cumprod 맨 첫번째 성분부터 각 성분까지의 누적곱을 계산 (1 번째 부터 계속 곱해짐)
+cov, corr() : 공분산, 상관계수
+skew 왜도 (오른쪽으로 치우침= 왜도<0, 왼쪽으로 치우침=왜도>0)
+kurt 첨도
+quantile 특정 사분위수에 해당하는 값을 반환 (0~1 사이)
+--- 0.25 : 1사분위 수
+--- 0.5 : 2사분위수 (quantile 의 기본 값)
+--- 0.75 : 3사분위수
+
+
+
+
+
+## 기타 TIP
+
+.rename(columns={"상호명":"상호수"}, inplace=True)    # 열이름 하나만 수정
+
+.copy()   # 변수를 새로 만들어 데이터를 할당 할 때에는 깊은복사 할것
+
+df_academy['상권업종소분류명'].isin(['학원-입시','어린이집'])    # isin() : 특정값만 뽑아 가져옴
+
+빈도표의 시각화 : sns.displot이나 sns.distplot, plt.hist
+
+회귀선 : replot, lmplot(hue와 col가능)
+
+
+
+
+
+

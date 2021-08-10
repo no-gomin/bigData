@@ -1,0 +1,38 @@
+## 히트맵을 아래쪽 반만 표현하기
+
+http://seaborn.pydata.org/examples/many_pairwise_correlations.html
+mask = np.triu(np.ones_like(corr, dtype=bool))
+sns.heatmap(corr, mask=mask)    # corr = df.corr() 미리 해둔 변수
+--> mask=~mask // 이렇게 하면 위쪽 반이 표현
+
+
+
+
+
+
+## 지도 시각화
+
+pip install folium  (conda install -c conda-forge folium)
+import folium
+
+예제목록 : http://nbviewer.jupyter.org/github/python-visualization/folium/tree/master/examples/
+Quickstart : https://nbviewer.jupyter.org/github/python-visualization/folium/blob/master/examples/Quickstart.ipynb
+
+# for문을 이용하여 여러곳의 위치를 반영하는 것도 가능
+for i in df_m.index:
+    tooltip = df_m.loc[i, '상호명']+' - ' +df_m.loc[i, '도로명']
+    lat     = df_m.loc[i, '위도']
+    long    = df_m.loc[i, '경도']
+    folium.Marker(
+        location=[lat, long], 
+        tooltip=tooltip
+    ).add_to(m)
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+## BeautifulSoup과 parser
+
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+https://www.crummy.com/software/BeautifulSoup/
+
+pip install bs4 
+pip install requests_file
+import requests
+from requests_file import FileAdapter
+from bs4 import BeautifulSoup
+
+
+
+
+
+## 로컬에 있는 파일을 가져올 때
+
+s = requests.Session()
+s.mount("file://", FileAdapter())    
+response = s.get('file:///bigdata/src/07_Python/ch14_sample.html')
+response   # 반환값 (200 : 성공 / 404 : 찾을수 없음 / 406 : 파이썬 웹크롤링 허용안함)
+
+response.content.decode('utf-8')   
+soup=BeautifulSoup(response.content,"html.parser")  
+
+
+
+
+
+
+## 선택자 : select, find_all, select_one, find // 리스트로 반환함
+
+el = soup.select_one('h1') # 처음 나오는 h1태그 하나만
+el = soup.select('h1, p')
+el = soup.select_one('h1.greeting.css')
+
+soup.find('div').find('p')   # find는 하위경로 직접지정 불가능함. find를 반복해야함.
+soup.select_one('div > p')    # select는 하위경로 직접지정 가능
+
+
+
+
+
+
+
+## 정적 웹 데이터 수집 (웹 크롤링)
+
+url = "https://movie.naver.com/movie/sdb/rank/rmovie.naver"    # url 저장
+movie_ranking = requests.get(url)    # 리퀘스트 모듈(GET 요청)
+soup = BeautifulSoup(movie_ranking.content, "html.parser")    # html 으로 문법 검사
+title_list = soup.select('td.title > div.tit3 > a')    # html문서를 보고 필요한 정보위치를 지정하기
+
+for idx in range(len(title_list)):
+    link = url + title_list[idx].attrs['href']
+    print("{:2d}위 영화 제목 : {} - {}".format(idx+1, title_list[idx].text, link))
+    page = requests.get(link)
+    s    = BeautifulSoup(page.content, "html.parser")
+    people = s.select('li a.tx_people') # 사람이름
+    staffs = s.select('dl.staff > dt') # 역할
+    print("감독 및 배우")
+    for i in range(len(people)):
+        print("{} : {}".format(people[i].text, staffs[i].text), end=" / ")
+    print("\n")
+
+
+
+
+
+
+## 데이터프레임으로 저장 및 파일 저장
+
+dic_list = []
+(for문으로 딕셔너리에 추가)
+df = pd.DataFrame(dic_list)
+df.to_csv('data/ch14_movie.csv',encoding='cp949')
+
+
+
+
+
+## 크롤링을 막아 놓은 사이트
+
+from urllib.request import urlopen   #  URL을 여는 함수 (먼저 해보기. 안 될 경우 아래 방법)
+
+headers = {'User-agent':'Mozilla/5.0'}     # 파이썬을 통한 접속이 아닌 것처럼 위장
+melonpage = requests.get(url, headers=headers)
+title = soup.select('div.wrap_song_info > div.ellipsis.rank01 > span > a')
+singer = soup.select('div.ellipsis.rank02 > span.checkEllipsis')
+for idx in range(len(title)):
+    print("{:3d}위 | {} | {}".format(idx+1, 
+                                    title[idx].string, singer[idx].string))
+
+
