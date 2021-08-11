@@ -1,0 +1,47 @@
+## selenium 
+
+https://selenium-python.readthedocs.io 
+
+pip install selenium
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+dv = webdriver.Chrome('c:/bigdata/chromedriver.exe')   # 브라우저 열림, 소스와 동일한 폴더에 있는 경우는 () 가 됨.
+
+
+
+
+
+
+## selenium 이용
+
+dv = webdriver.Chrome('c:/bigdata/chromedriver.exe')   # 브라우저 열림, 소스와 동일한 폴더에 있는 경우는 () 가 됨.
+dv.get('http://python.org')    # url로 이동
+elem = dv.find_element_by_name('q')     # name='q' 를 elem에 담음
+elem.clear()    
+elem.send_keys('pycon')     # 입력
+elem.send_keys(Keys.RETURN)    # Enter키 효과
+elem.click() 
+elem.send_keys(Keys.CONTROL, "a")     # 컨트롤a (전체선택)
+soup = BeautifulSoup(dv.page_source, "html.parser")     # content  -> page_source
+dv.close()    # 브라우저 닫힘.
+
+
+
+
+
+
+## 실행할 시간 기다렸다가 실행하기
+
+import time
+
+time.sleep(1)    # 1초 기다리기
+
+
+
+
+
+
+
+
+

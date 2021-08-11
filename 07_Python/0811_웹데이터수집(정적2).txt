@@ -1,0 +1,37 @@
+## 정규표현식을 활용
+
+import re
+
+phone = re.findall(r'.?\d{2,2}.?\d{3,4}.\d{4}', pasing_string)    ## 전화번호
+msg = re.findall(r'[가-힣a-zA-Z0-9 ]', text)    # 특수문자 빼고 / 이어붙이기
+''.join(msg)
+
+
+
+
+
+## RSS 데이터 가져오기
+
+url = "http://www.weather.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=108"
+target = urllib.request.urlopen(url)
+contents = target.read().decode('utf-8')
+locations = re.findall(r'<location wl_ver="3">.+?</location>', contents, re.DOTALL)
+# 정규표현식을 활용하여 location 태그 안의 데이터를 추출
+# re.DOTALL:정규표현식의 .에 줄바꿈문자(\n)를 포함
+
+
+
+
+
+## xml 크롤링
+
+from urllib.request import urlopen
+
+target = urlopen(url)      # target = requests.get(url)
+soup   = BeautifulSoup(target, "xml")     # soup = BeautifulSoup(target.content, "xml")
+locations = soup.find_all('location')     # locations = soup.select('location')
+
+
+
+
+
