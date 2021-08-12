@@ -1,0 +1,49 @@
+## 실습 : 임의의 남성, 여성의 키와 몸무게를 군집화 
+
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 두 영역을 나누기 위해 두점 사이의 거리를 구하는 함수 (0,0) ~ (4,3) : root(4**2+3**2)
+def dist(a, b):
+    return np.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
+
+# 임의의 데이터 만들기
+data=[]
+for i in range(50):
+    data.append([random.randint(40,70), random.randint(140,180)])  #여자 [몸무게, 키]
+    data.append([random.randint(60,90),random.randint(170,200)])   #남자 [몸무게, 키]
+
+# 임의의 기준점 만들기
+new_points =[[random.randint(40,90), random.randint(140,200)],
+             [random.randint(40,90), random.randint(140,200)]]
+
+# 군집화 및 기준점 바꾸기
+for i in range(1, 11):
+    print(i,'번째 기준점 :', new_points)
+    
+    group1 = []
+    group2 = []
+    
+    for d in data:
+        if dist(new_points[0], d) < dist(new_points[1], d):
+            group1.append(d)
+        else:
+            group2.append(d)
+        
+    new_points = []   # group1과 group2의 중간지점으로 기준점 바꾸기
+    sumX = 0; sumY = 0
+    for g in group1:
+        sumX += g[0]
+        sumY += g[1]
+    new_points.append([sumX/len(group1), sumY/len(group1)])
+    sumX=0 ; sumY=0
+    for g in group2:
+        sumX += g[0]
+        sumY += g[1]
+    new_points.append([sumX/len(group2), sumY/len(group2)])
+    
+# group1, group2로 군집화 됨
+[plt.plot(g[0], g[1], 'o', color='r') for g in group1]
+[plt.plot(g[0], g[1], 'o', color='b') for g in group2]
+plt.show()

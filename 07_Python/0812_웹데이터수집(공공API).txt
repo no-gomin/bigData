@@ -1,0 +1,29 @@
+## Open API(특정 프로그램을 만들기 위해 제공되는 모듈)
+
+https://www.data.go.kr/
+활용신청 -> 인증키발부 -> 도큐먼트 참조 xml 다운로드
+
+
+# 받은 일반인증키로 url 만들기
+busNum = '400   # 찾고자 하는 것
+key = 'ZS3iEVZ82iG9dvZc3urYq03YK9x0dwPWsaXcaNd1XACv8yWys1TONILRRSHiRNyrFo1qVk379RdHIUhAtRaL5w%3D%3D'
+url1 = "http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?serviceKey="+key+"&strSrch="+busNum
+
+
+# xml 저장 및 불러오기
+savefilename = 'c:/bigdata/src/1_businfo.xml'
+req.urlretrieve(url1, savefilename)
+xml = open(savefilename, 'r', encoding='utf-8').read()
+soup = BeautifulSoup(xml, "xml")
+
+
+# 원하는 정보 추출
+busRouteId = None
+for itemList in soup.find_all('itemList'):
+    busRouteNm = itemList.find('busRouteNm').text
+    if busRouteNm == busNum:
+        busRouteId = itemList.find('busRouteId').text
+        break;
+
+
+

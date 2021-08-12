@@ -1,0 +1,65 @@
+## 머신러닝 프로그램 방식
+
+from tensorflow.keras.models import Sequential      # 모델 생성
+from tensorflow.keras.layers import Dense      # 입력값과 출력값
+
+1. 데이터 확보 및 생성
+2. 데이터 전처리 : 훈련데이터셋(학습데이터셋), 검증데이터셋, 시험데이터셋,...
+3. 모델 구성
+4. 모델 학습과정 설정
+5. 모델 학습시키기
+6. 모델 평가(시험데이터셋으로)
+7. 모델 사용(입력값을 주어지면 예측값을 받기)
+
+
+
+
+
+## 2. 데이터 전처리 : 컴퓨터에게 학습시키기 위해 normalize함(전체의 편차를 비슷하게) // 이상적인 편차 : 0~1
+
+data_C = np.array(range(100))     # np.arange(100)
+data_F <- 섭씨온도 data_C의 화씨온도
+scaled_data_C = data_C / 100.0    <--- 독립변수  
+scaled_data_F = data_F / 100.0     <---- 타겟변수   
+
+
+
+
+
+## 3. 모델 구성
+
+model = Sequential()
+model.add(Dense(1, input_dim=1))     # input_dim=1 : 독립변수가 1개
+
+
+
+
+
+## 4. 모델 학습 과정 설정
+
+model.compile(loss="mse", optimizer="rmsprop", metrics=['mae'])
+print(model.summary())
+# loss : 손실함수  /  optimizer : 모델을 개선하는 최적화 기법  /  metrics : 평가지표
+
+
+
+
+## 5. 모델 학습시키기 - 1번만 실행해야함
+
+hist = model.fit(scaled_data_C, scaled_data_F, epochs=1000, verbose=2)
+# scaled_data_C : 독립변수(훈련DATA)   /  scaled_data_F : 타겟변수(훈련DATA)  
+# epochs : 학습횟수  /  verbose : 학습시 출력여부 (0 : 필요없음 / 1 : 간단히 / 2 : 자세히)
+
+
+
+
+
+## 7. 모델 사용하여 예측하기 + 모델 저장
+
+model.predict(np.array([0.01]))    # 0.01 = 1 / 100.0
+
+model.save('폴더명/파일명.h5')   # h5 타입으로
+
+
+
+
