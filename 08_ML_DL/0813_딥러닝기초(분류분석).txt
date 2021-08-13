@@ -1,0 +1,146 @@
+## 머신러닝 : 데이터에서 법칙성을 추출
+
+import tensorflow.keras.utils as utils    #분류분석시 원핫인코딩
+from tensorflow.keras.models import Sequential     # 모델생성
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.models import load_model    # 모델로드
+import numpy as np    # tensorflow에서는 배열사용
+import matplotlib.pyplot as plt
+
+
+1. 데이터 셋 생성 원본 데이터 및 시뮬레이션을 통해 데이터 생성
+2. 전처리 훈련셋(학습셋), 검증셋, 시험셋(테스트셋) 머신러닝 및 딥러닝 모델에서 학습 및 평가를 할 수 있도록 포맷 변환
+3. 모델 구성 시퀀스 객체 생성한 뒤 필요한 add()함수를 이용해 레이어 추가
+4. 모델 학습과정 설정 compile()함수 이용. 손실함수, optimizer, metrics(평가지표)
+5. 모델 학습 시키기 (ft. 학습과정 지켜보기) fit()함수 이용. 훈련셋입력데이터,훈련셋타겟데이터, 학습횟수, 검증셋
+6. 모델 평가 시험셋을 인자로 넣는 evaluate()함수 이용, 그래프
+7. 모델 사용 predict() 이용
+8. 모델 저장 save()함수 이용해서 저장, load_model()함수를 이용해서 모델 불러오기
+
+
+
+
+
+## 1. 데이터 셋
+
+# 학습데이터 = 훈련데이터
+X_train = np.array([1,2,3,4,5,6,7,8,9]*10)
+Y_train = np.array([2,4,6,8,10,12,14,16,18]*10)
+
+# 검증데이터
+X_val = np.array([1,2,3,4,5,6,7,8,9])
+Y_val = np.array([2,4,6,8,10,12,14,16,18])
+
+
+
+
+
+
+## 2. 데이터 전처리
+
+# 분류분석을 하기 위해 target데이터를 라벨링 전환 (원 핫 인코딩)
+Y_train = utils.to_categorical(Y_train, 19)   # 훈련데이터 Y-train의 제일큰값인 18에 1을 더함 (생략가능)
+Y_val   = utils.to_categorical(Y_val, 19)     # 타겟변수 19개
+
+
+
+
+
+## 3. 모델 구성하기
+
+model = Sequential()
+model.add(Dense(units=38, input_dim=1, activation='sigmoid'))    # units:출력수
+model.add(Dense(units=64, activation="elu"))
+model.add(Dense(units=32, activation='elu'))
+model.add(Dense(units=19, activation='softmax'))
+# 독립변수가 1개여서 제일 첫 입력값은 1
+# 타겟변수가 19개여서 제일 마지막 출력값은 19
+# softmax : 모든 출력결과의 합이 1. 분류분석의 마지막 layer에서 activation 함수로
+
+print(model.summary())
+# (input_dim + 1) * OutputShape = Param
+
+
+
+
+## 4. 모델 학습과정 설정
+
+model.compile(loss="categorical_crossentropy", optimizer='sgd', metrics=['accuracy'])
+
+
+
+
+
+## 5. 모델 학습시키기
+
+hist = model.fit(X_train, Y_train, epochs=300, batch_size=10, verbose=2, validation_data=(X_val, Y_val))
+# epochs : 데이터 전체를 반복학습하는 횟수 
+# batch_size : 한번에 n개씩 나누어 학습
+# validation_data : 검증데이터로 확인
+
+hist.history.keys()
+
+
+
+
+
+
+## 6. 모델 학습과정 살펴보기 + 모델 평가하기
+
+# 학습과정 그래프 그리기
+fig, loss_ax = plt.subplots(figsize=(10,8))
+loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+loss_ax.plot(hist.history['val_loss'], 'r', label="val loss")
+acc_ax = loss_ax.twinx() #loss_ax와 x축을 공유하는 acc_ax 생성
+acc_ax.plot(hist.history['accuracy'], 'g', label='train accuracy')
+acc_ax.plot(hist.history['val_accuracy'], 'b', label='val accuracy')
+loss_ax.set_xlabel('epoch')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('accuracy')
+loss_ax.legend(loc='upper left')
+acc_ax.legend(loc='center right')
+plt.show()
+
+# 모델 평가하기
+score = model.evaluate(X_val, Y_val, batch_size=1)
+print('평가된 loss :', score[0], '평가된 accuracy :', score[1]*100, '%')
+
+
+
+
+
+
+## 7. 모델 사용하기 (모델을 이용하여 예측하기)
+
+H = model.predict(np.array([2]))   # 2에 대한 예측값이 라벨링 상태로 출력됨
+H.argmax()   # 예측값 출력됨
+H[0,H.argmax()] *100    # 예측값의 정확도 출력됨
+
+
+
+
+
+
+## 8. 모델 저장하기
+
+model.save('model/3_deep_begin.h5')   # 저장
+model2 = load_model('model/3_deep_begin.h5')   # 로드
+
+
+
+
+
+## 추가로 알아두기
+
+# csv파일을 numpy 배열로 읽어오기
+dataset = np.loadtxt('data/pima-indians-diabetes.csv', delimiter=',')
+
+# 당뇨발병 예측처럼 훈련타겟데이터가 0과 1뿐인(binary classification) 경우는 원핫인코딩을 할 필요 없음
+원핫인코딩 안하면? 최종 출력 = 1    ----->   원핫인코딩 하면? 최종 출력 = 2
+0 --원핫인코딩--> 1 0     //      1 --원핫인코딩 --> 1 0
+
+
+
+
+
+
