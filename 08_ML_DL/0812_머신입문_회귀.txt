@@ -48,7 +48,7 @@ print(model.summary())
 
 hist = model.fit(scaled_data_C, scaled_data_F, epochs=1000, verbose=2)
 # scaled_data_C : 독립변수(훈련DATA)   /  scaled_data_F : 타겟변수(훈련DATA)  
-# epochs : 학습횟수  /  verbose : 학습시 출력여부 (0 : 필요없음 / 1 : 간단히 / 2 : 자세히)
+# epochs : 학습횟수  /  verbose : 학습시 출력여부 (0 : 출력없음 / 1 : 자세히(기본값) / 2 : 간단히)
 
 
 
