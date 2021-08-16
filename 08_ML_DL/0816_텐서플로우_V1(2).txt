@@ -1,0 +1,110 @@
+## scale 맞추기 : normalization(정규화, 더 많이 씀), standardization(표준화) == 평균 0, 표준편차 1
+
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+
+
+
+
+
+
+## sscale이 다른 데이터들의 linear regression을 구현 (1차배열인 경우는 2차배열로 바꿀 것)
+
+# 아래처럼 스케일 조정하는 부분 외에는 모두 동일
+from sklearn.preprocessing import MinMaxScaler
+scaler_x = MinMaxScaler()    ;    scaler_x.fit(x_data)
+x_data = scaler_x.transform(x_data)
+scaler_y = MinMaxScaler()    ;    scaler_y.fit(y_data)
+y_data = scaler_y.transform(y_data)
+
+# 예측(모델 사용해 보기)
+scaled_input = scaler_x.transform(np.array([[2]]))   # 이미 fit된 scaler은 얼마든지 재사용 가능
+scaler_y.inverse_transform(sess.run(H, feed_dict={x: scaled_input}))   
+
+
+
+
+
+
+## 독립변수 x가 여러개인 linear regression (ex. [x1, x2, x3] / [y1])
+
+X = tf.placeholder(shape=[None, 3], dtype=tf.float32)   # None : X가 여러행 + 이후 예측 위해 // Y = [None, 1]
+
+W = tf.Variable(tf.random_normal([3,1]), name='weight')
+
+H = tf.matmul(X, W) + b    # matmul : 행렬의 곱 --> Hypothesis, H = X @ W + b 
+
+
+
+
+
+
+## logistic Regression = Binary classification (Y가 1 또는 0)
+
+# Hypothesis
+logits = tf.matmul(X, W) + b   
+H = tf.sigmoid(logits)
+
+# cost 함수
+cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=logits, labels=Y))
+
+# 정확도 확인하기
+predict = tf.cast(H>0.5, dtype=tf.float32)    # 1.0 / 0.0 으로 반환
+correct = tf.equal(predict, Y)     # accuracy와 Y값 일치 여부 : True, True, True, True, True, True, True
+accuracy = tf.reduce_mean(tf.cast(correct, dtype=tf.float32))
+print("정확도 :", sess.run(accuracy, feed_dict={X:x_data, Y:y_data}))
+
+# 예측(모델 사용하기)
+print("H결과 \n", sess.run(H, feed_dict={X:np.array([[10,3]])}))
+print("predict 결과 :", sess.run(predict, feed_dict={X:np.array([[10,3]])}))
+
+
+
+
+
+## 종속변수 Y가 3개 이상인 경우에는 원핫인코딩 하기 (숫자 데이터이면 to_categorical 바로 가능)
+from sklearn.preprocessing import LabelEncoder
+from tensorflow.keras.utils import to_categorical
+import pandas as pd
+
+# 방법 1
+encoder = LabelEncoder()
+y_data = encoder.fit_transform(y_data)
+y_data = to_categorical(y_data)
+
+# 방법 2
+encoder = LabelEncoder()
+y_data = encoder.fit_transform(y_data)
+y_data = pd.get_dummies(y_data).values      # .values 데이터프레임을 array로 변환
+
+# 방법 3
+y_data = pd.DataFrame(y_data)
+y_data = pd.get_dummies(y_data).values      # get_dummies 0과 1로 구성된 더미값 생성
+
+# Binary classification와 차이점
+Y = tf.placeholder(shape=[None,3], dtype=tf.float32)    # 열의 개수가 바뀜
+b = tf.Variable(tf.random_normal([3]), name="bias")     
+H = tf.nn.softmax(logits)     # softmax 최동단계 결과들의 합이 1
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logits, labels=Y))
+predict = tf.argmax(H, axis=1)
+
+
+
+
+
+
+## 기타 알아둘 것
+
+csv 파일을 데이터프레임으로 read -> 결측치 삭제 -> 필요한 행 추출 -> 독립 + 종속변수 분리
+
+
+
+
+
+
+
+
+

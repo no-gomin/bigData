@@ -1,0 +1,88 @@
+## XOR : tensorflow V1
+
+x_data = np.array([[0,0], [0,1], [1,0], [1,1]])
+y_data = np.array([[0], [1], [1], [0]])
+
+X = tf.placeholder(shape=[None, 2], dtype=tf.float32)
+Y = tf.placeholder(shape=[None, 1], dtype=tf.float32)
+
+# layer1의 weight & bias (layer1 = 입력2, 출력10)
+W1 = tf.Variable(tf.random_normal([2,10]), name="weight1")
+b1 = tf.Variable(tf.random_normal([10]), name="bias1")
+layer1 = tf.nn.relu(tf.matmul(X, W1) + b1)
+
+# layer2의 weight * bias (layer2 = 입력10, 출력20)
+W2 = tf.Variable(tf.random_normal([10,20]), name="weight2")
+b2 = tf.Variable(tf.random_normal([20]), name="bias2")
+layer2 = tf.nn.relu(tf.matmul(layer1, W2) + b2)
+
+# layer3의 weight * bias (layer3 = 입력20, 출력10)
+W3 = tf.Variable(tf.random_normal([20,10]), name="weight3")
+b3 = tf.Variable(tf.random_normal([10]), name="bias3")
+layer3 = tf.nn.relu(tf.matmul(layer2, W3) + b3)
+
+# layer4의 weight * bias (layer4 = 입력10, 출력1)
+W4 = tf.Variable(tf.random_normal([10,1]), name="weight4")
+b4 = tf.Variable(tf.random_normal([1]), name="bias4")
+
+logits = tf.matmul(layer3, W4) + b4
+H = tf.sigmoid(logits)
+
+cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=logits, labels=Y))
+
+train = tf.train.GradientDescentOptimizer(learning_rate=0.05).minimize(cost)
+
+sess = tf.Session()     ;     sess.run(tf.global_variables_initializer())
+
+for step in range(1, 6001):
+    _, cost_val = sess.run([train, cost], feed_dict={X:x_data, Y:y_data})
+    if step%300 == 0:
+        print("{}번째 cost : {}".format(step, cost_val))
+
+predict = tf.cast(H>0.5, dtype=tf.float32)
+correct = tf.equal(predict, Y)
+accuracy = tf.reduce_mean(tf.cast(correct, dtype=tf.float32))
+sess.run(accuracy, feed_dict={X:x_data, Y:y_data})
+
+
+
+
+
+
+
+
+
+## XOR : tensorflow V2
+
+x_data = np.array([[0,0], [0,1], [1,0], [1,1]])
+y_data = np.array([[0], [1], [1], [0]])
+
+model = Sequential()
+model.add(Dense(units=10, input_dim=2, activation='relu'))
+model.add(Dense(units=20, activation='relu')) # 은닉층은 input_dim을 쓰지 않음
+model.add(Dense(units=10, activation='relu'))
+model.add(Dense(units=1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['binary_accuracy'])    # 이중 분류
+# model.compile(loss='categorical_crossentropy' optimizer="adam", metrics=['accuracy'])     # 다중 분류
+# model.compile(loss='mse' optimizer="adam", metrics=['mae'])     # 회귀(regression) 용도
+
+hist = model.fit(x_data, y_data, epochs=100, verbose=2)
+
+while True:     # 입력값 받아(0 0 / 0 1 / 1 0 / 1 1)
+    input_list = input('space로 분리해서 0이나 1을 2개 입력(종료:9)').strip().split()
+    input_data = list(map(int, input_list))
+    if input_data[0] == 9:
+        break;
+    input_data = np.array(input_data).reshape(-1,2)
+    print('입력값 : ', input_data)
+    print('예측값 : ', int(model.predict(input_data).round() ))
+
+
+
+
+
+
+
+
+
