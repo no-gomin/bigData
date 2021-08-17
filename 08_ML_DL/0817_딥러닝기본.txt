@@ -1,0 +1,116 @@
+## 콜백 함수 1
+
+import tensorflow as tf
+class CustomeHistory(tf.keras.callbacks.Callback): # on_epoch_end()
+    def __init__(self):
+        self.epoch = 0
+    def on_epoch_end(self, batch, logs={}):
+        self.epoch += 1
+        if self.epoch % 50 == 0:
+            print("epoch:{}, loss:{}, acc:{}, val_loss:{}, val_acc:{}".\
+                 format(self.epoch, logs.get('loss'),
+                       logs.get('accuracy'),
+                       logs.get('val_loss'),
+                       logs.get('val_accuracy') ) )
+customeHistory = CustomeHistory()
+hist = model.fit(X_train, Y_train, epochs=1200, batch_size=100,
+                validation_data=(X_val, Y_val),
+                callbacks=[customeHistory], verbose=0)
+# 출력 : epoch:50, loss:2.035, acc:0.282, val_loss:2.087, val_acc:0.25
+
+
+
+
+
+
+
+## 콜백 함수 2 -  Early Stopping (val_loss값이 늘어나면 지정한 epoch를 모두 수행하지 않고 조기 종료)
+
+from tensorflow.keras.callbacks import EarlyStopping
+# earlyStopping = EarlyStopping(patience=30)      # 성급한 조기종료
+earlyStopping = EarlyStopping(patience=50)         # 적절한 조기종료 (val_loss값 이상변화를 50회까지 무시)
+hist = model.fit(X_train, Y_train, epochs=3000, batch_size=100,
+                validation_data=(X_val, Y_val),
+                callbacks=[earlyStopping])
+
+
+
+
+
+
+## accuracy 늘리기
+
+데이터 확보
+레이어
+활성화함수 : 은닉층에는 주로 relu, elu, output layer에는 sigmoid(이진분류), softmax(다중분류)
+optimizer, epoch 등을 조정
+
+
+
+
+
+
+## 훈련셋과 테스트셋을 나누기
+
+from sklearn.model_selection import train_test_split 
+X_train, X_test, Y_train, Y_test = train_test_split(x_data, y_data, test_size=0.3, random_state=5)
+# test_size = 0.3 -> 30%를 test로 사용    //    random_state = 섞을 때 참고하는 int값, 지정해두어야 매번 동일하게 적용됨.
+
+
+
+
+
+## 모델구성시 과적합을 해결하고자, 기억하되 두루뭉실하게 기억하자.
+(몇개의 노드를 죽이고, 남은 노드들을 통해서만 훈련을 하는 것)
+
+from tensorflow.keras.layers import Dropout
+model.add(Dropout(0.1))     # 10%의 노드들을 지워라 (보통 0.3을 함)
+
+
+
+
+
+## 분류분석일때, metrics(측정기준), confusion_metrix(성능 평가 지표) : 
+
+accuracy(정확도) : 예측결과와 실제값이 동일한 건수/전체건수
+recall(재현율) : 실제True인데 예측도 True로 한 건수 /실제 True인 건수
+precision(정밀도, 민감도) : 실제True인데 예측도 True로 한 건수 / True로 예측한 건수
+
+from tensorflow.keras import metrics
+model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['accuracy', metrics.Recall(), metrics.Precision()])
+
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import f1_score
+pred = model.predict(X_test)
+pred = (pred>0.5)
+print(confusion_matrix(Y_test, pred), end='\n')
+print('f1_score : ', f1_score(Y_test, pred))
+
+
+
+
+
+
+
+## 기타 내용
+
+.to_numpy()함수는 .values와 유사
+
+model.add(Input(11))    # 의미있는 레이어가 아니고 input_dim만 지정
+
+cross_tab = pd.crosstab(real, pred)    # 성능지표 표시 (real=실제Y값, pred=예측값)
+
+pd.get_dummies을 사용하면 정렬후 라벨링됨.
+└> argmax하면 index가 반환되기 때문에 이부분을 고려하여 값을 비교해야함
+
+
+
+
+
+
+
+
+
+
+
+
