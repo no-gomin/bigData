@@ -1,0 +1,128 @@
+## CNN (컨볼루션 레이어 포함)이 DNN보다 높은 정확도를 보임
+
+
+
+
+
+
+## 공통부분
+
+# 1. 데이터 셋 생성
+width=28; height=28
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train = # ---------- 다름 ---------- 
+x_test  = # ---------- 다름 ---------- 
+
+x_val = x_train[50000:]
+y_val = y_train[50000:]
+x_train = x_train[:50000]
+y_train = y_train[:50000]
+
+y_train = utils.to_categorical(y_train)
+y_val   = utils.to_categorical(y_val)
+y_test  = utils.to_categorical(y_test)
+
+# 2. 모델 생성
+# ---------- 다름 ---------- 
+
+# 3. 학습과정 설정
+model.compile(loss="categorical_crossentropy", optimizer="adam", 
+              metrics=['accuracy'])
+
+# 4. 학습시키기
+early_stopping = EarlyStopping(patience=10)
+hist = model.fit(x_train, y_train, epochs=30, batch_size=32,
+                validation_data=(x_val, y_val),
+                callbacks=[early_stopping])
+
+# 5. 학습과정 살펴보기
+fig, loss_ax = plt.subplots()
+loss_ax.plot(hist.history['loss'], 'y', label="train loss")
+loss_ax.plot(hist.history['val_loss'], 'g', label="val loss")
+loss_ax.set_xlabel("epochs")
+loss_ax.set_ylabel("loss")
+
+acc_ax = loss_ax.twinx() # x축 공유하는 acc_ax
+acc_ax.plot(hist.history['accuracy'], 'b', label="train accuracy")
+acc_ax.plot(hist.history['val_accuracy'], 'r', label="val accuracy")
+acc_ax.set_ylabel("accuracy")
+
+loss_ax.legend(loc="upper left")
+acc_ax.legend(loc="lower left")
+plt.show()
+
+
+
+
+
+
+## 다른 점 : 1. 데이터 셋 생성
+
+# DNN
+x_train = x_train.reshape(60000, width*height).astype('float32')/255.0
+x_test  = x_test.reshape(10000, width*height).astype('float32')/255.0
+
+# CNN
+x_train = x_train.reshape(60000, width, height, 1).astype('float32')/255.0
+x_test  = x_test.reshape(10000, width, height, 1).astype('float32')/255.0
+
+
+
+
+
+
+## 다른 점 : 2. 모델 생성
+
+# DNN
+model = Sequential()
+model.add(Dense(256, input_dim=width*height, activation='relu'))   
+model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(10, activation="softmax"))
+
+# CNN
+model = Sequential()
+model.add(Conv2D(64, (3,3), activation='relu', input_shape=(width, height, 1)))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.2))
+model.add(Conv2D(64, (3,3), activation='relu'))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.2))
+model.add(Flatten())
+model.add(Dense(256, activation='relu'))    
+model.add(Dense(128, activation='relu'))     
+model.add(Dense(10, activation="softmax")) 
+
+
+
+
+
+
+
+# 모델을 사용하여 예측이 틀린 데이터만 출력 (DNN & CNN 모두 사용가능)
+yhat = model.predict(x_test).argmax(axis=1) # 예측치
+y = y_test.argmax(axis=1) # 실제값
+
+plt_row = 10
+plt_col = 10
+plt.rcParams['figure.figsize'] = (20,20)
+fig, axarr = plt.subplots(plt_row, plt_col)
+plt.subplots_adjust(hspace=0.4, wspace=0.3) 
+
+i = 0   # yhat과 y를 액세스할 index
+cnt = 0 # 출력횟수
+while (cnt < (plt_row*plt_col) ) & (i<len(y)):
+    if yhat[i] == y[i]:
+        i += 1
+        continue
+    sub_plot = axarr[cnt//10, cnt%10]
+    sub_plot.imshow(x_test[i].reshape(width, height))
+    sub_plot.axis('off')
+    title = 'r:'+str(y[i])+"/p:"+str(yhat[i])
+    sub_plot.set_title(title)
+    i += 1
+    cnt += 1
+
+
+
+

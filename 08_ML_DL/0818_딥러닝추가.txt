@@ -1,0 +1,18 @@
+## 학습시 중간에 파일로 저장하기 : callbacks=[checkpoint]
+
+import os
+
+model_save_folder = 'model/'
+if not os.path.exists(model_save_folder):    # 폴더가 없으면 생성
+    os.mkdir(model_save_folder)
+
+file = model_save_folder + 'iris-{epoch:03d}-val{val_accuracy:.4f}.h5'
+checkpoint = ModelCheckpoint(filepath=file, monitor='val_accuracy', save_best_only=True, verbose=1)
+
+# iris-001-val0.4583.h5 / iris-051-val0.8333.h5 <-- 이런식으로 저장됨
+
+
+
+
+
+

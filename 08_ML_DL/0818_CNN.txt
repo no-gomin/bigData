@@ -1,0 +1,100 @@
+## CNN
+
+import numpy as np
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D     # 필터링(특징 추출)
+from tensorflow.keras.layers import MaxPooling2D     # 풀링
+from tensorflow.keras.layers import Flatten     # 2차원데이터를 1차원
+from tensorflow.keras.layers import Dense, Dropout
+
+
+
+
+
+
+## 데이터 생성하기
+
+train_datagen = ImageDataGenerator(rescale=1./255)     # 정규화 작업
+train_data = train_datagen.flow_from_directory(     # 폴더별로 분류하여 로드
+                'data/handwriting/handwriting_shape/train', 
+                target_size = (24,24),  class_mode = 'categorical', batch_size=3 )
+test_datagen = ImageDataGenerator(rescale=1./255) # 정규화 작업
+test_data = test_datagen.flow_from_directory(
+                'data/handwriting/handwriting_shape/test',
+                target_size = (24,24), class_mode = 'categorical',  batch_size=3 )
+
+
+
+
+
+
+
+## 모델 구성시 추가 : Conv2D(필터갯수, 필터사이즈, activation_fun, 입력 shape)
+
+model = Sequential()
+model.add(Conv2D(32, kernel_size=(3,3), activation='relu', input_shape=(24,24,3)))
+model.add(Conv2D(64, kernel_size=(3,3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2,2))) # 2*2에서 제일 큰값만 뽑아 이미지 축소
+model.add(Flatten()) # 2차원 데이터를 1차원으로
+model.add(Dense(units=128, activation='relu'))
+model.add(Dense(3, activation='softmax'))
+
+
+
+
+
+
+## 모델 학습과정 설정 & 학습시키기 & 평가하기
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+model.fit_generator(train_data, steps_per_epoch=15, epochs=50,
+                            validation_data=test_data, validation_steps=5)
+
+score = model.evaluate_generator(test_data, steps=5)
+print('loss :', score[0], 'accuracy :', score[1])
+
+
+
+
+
+
+
+## 예측하기
+
+pred = model.predict_generator(test_data)
+print(test_data.class_indices)     # 어떻게 카테고리 되어있는지 확인
+np.set_printoptions(formatter={'float':lambda x : "{:0.2f}".format(x)})
+print(pred)
+
+
+
+
+
+
+## accuracy 늘리기
+
+데이터 확보
+데이터 부풀리기(ImageDataGenerator)
+레이어 층(Conv, Dense)
+
+
+
+
+
+
+## 데이터 부풀리기
+
+train_datagen = ImageDataGenerator(rescale=1./255,    
+                                  rotation_range=10,
+                                  width_shift_range=0.2,
+                                  height_shift_range=0.2,
+                                  shear_range=0.7,     # 0.7라이안 밀림
+                                  zoom_range=[0.9,2.1],
+                                  horizontal_flip=True,     # 수평방향 뒤집기
+                                  vertical_flip=True,     # 수직방향 뒤집기
+                                  fill_mode='nearest')    # 이미지 확대시 채우는 방식
+                                  
+
+
