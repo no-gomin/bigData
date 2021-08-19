@@ -1,0 +1,78 @@
+## 기본 사항
+
+1. 자연어 처리
+     자연어(사람들이 일상적으로 사용 언어)처리
+     자연어 처리 분야
+          - 자연어 이해 : 형태소 분석 -> 의미 분석
+          - 자연어 생성 : 대화분석 -> 다음 문장이나 단어 출력
+     활용분야 : 맞춤법검사, 번역기, 키워드 분석, 쳇봇
+
+2. 자연어 처리 절차
+     전처리 : 단어, 어절 추출
+     분석 후보 생성 : 형태소 분리, 원형복원, 품사 태깅
+     제약조건(불용어 처리) 규칙 확인
+     분석(현상시각화=워드클라우드, 연관분석, 거리계산, RNN, ..)
+
+3. 한글 형태소 분석 엔진
+     KoNLP : R용 자연어 처리기
+     KoNLPy : python용 자연어 처리기 (---> JPype1 패키지를 의존)
+            * KOMORAN  : 자바로 만든 형태소 분석기(JAVA_HOME 시스템변수)
+            * HanNanum : 자바로 만든 형태소 분석기(JAVA_HOME 시스템변수)
+            * Kkma : 서울대에서 자바로 만든 형태소 분석기(JAVA_HOME 시스템변수)
+           ---> https://www.lfd.uci.edu/~gohlke/pythonlibs/#jpype    
+                 # KoNLP가 의존하기 때문에 JPype1 패키지를 먼저 설치해 주어야 한다.
+                 # 주피터 노트북 :  ! pip install JPype1-1.2.0-cp38-cp38-win_amd64.whl
+
+4. 한글 형태소 사전
+     https://konlpy.org
+     -> api 클릭 -> 페이지 위에 Comparison between POS tagging classes 클릭 
+     -> 위에 Korean POS tags comparison chart 클릭
+
+
+
+
+
+
+
+## HanNanum
+
+from konlpy.tag import Hannanum
+
+han = Hannanum()
+han.analyze(text)     # 형태소 후보 반환
+print(han.morphs(text))     # 형태소 분석만
+print(han.nouns(text))    # 명사만 추출
+print(han.pos(text, ntags=22))     # ntags 디폴트는 9
+
+
+
+
+
+
+## Kkma
+
+from konlpy.tag import Kkma
+
+kkma = Kkma(max_heap_size=1024)    # 힙메모리 사이즈 늘릴 때 사용
+print(kkma.morphs(text))    # 형태소 분석
+print(kkma.nouns(text))    # 명사 추출
+print(kkma.pos(text, 56))    # ntags 디폴트값은 30
+
+
+
+
+
+
+## Komoran
+
+from konlpy.tag import Komoran
+
+komoran = Komoran(max_heap_size=2024)    # heap memory 늘리기
+print(komoran.morphs(text))    # 형태소분석
+print(komoran.nouns(text))    # 명사만 추출
+print(komoran.pos(text))
+
+
+
+
+

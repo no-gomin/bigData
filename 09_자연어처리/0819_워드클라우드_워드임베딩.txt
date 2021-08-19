@@ -1,0 +1,79 @@
+## 말뭉치 가져오기 & 워드 클라우드 데이터 준비
+
+from konlpy.corpus import kolaw
+data = kolaw.open('constitution.txt').read()    # 말뭉치 가져오기
+
+word_list = komoran.nouns('%r' % data)    # 명사 추출(리스트로 반환)
+
+text = ' '.join(word_list)   # 워드 클라우드는 하나의 연결된 문자여야 함.
+# ['대한민국', '헌법'] ---> '대한민국 헌법'
+
+
+
+
+
+
+## 불용어 처리 (불용어 지정 + 불용어 사전)
+
+from wordcloud import STOPWORDS
+
+불용어 = STOPWORDS | set(['국무총리', '때'])
+불용어 = set(['국무총리', '때'])
+
+
+
+
+
+
+## 마스킹 : 지정된 마스크 이미지에 맞도록 워드 클라우드를 생성
+
+from PIL import Image
+import numpy as np
+
+img = Image.open('test3.png').convert('RGBA') # RGB와 투명도
+mask = np.array(img)
+
+
+
+
+
+
+## 워드 클라우드 + 그리기
+
+pip install wordcloud
+from wordcloud import WordCloud
+
+wordcloud = WordCloud(background_color='white',
+                     max_words=300,    # 최대 등장 단어
+                     font_path='c:/Windows/Fonts/H2PORM.TTF',
+                     relative_scaling=0.2,
+                     stopwords=불용어,
+                     mask=mask)    
+wordc.generate(text)    # 워드클라우드 생성 (.join으로 합친 문자 데이터)
+
+wordcloud.to_file('test3_wordcloud.png')   # 생성된 워드 클라우드 저장
+
+plt.figure(figsize=(10,10))
+plt.imshow(wordcloud, interpolation='bilinear')    # 보간법 이용하여 그리기
+plt.axis('off') 
+
+
+
+
+
+
+
+## 워드 임베딩 : 단어간 유사성 도출
+
+pip install gensim 
+from gensim.models import Word2Vec
+
+model = Word2Vec(news, window=5, min_count=2, workers=-1)
+# window=컨텍스트 윈도우 크기   /   min_count=단어 최소 빈도수 제한   /   workers=학습위한 프로세스 수
+
+model.wv.most_similar('집', topn=5)
+# topn=출력할 비슷한 단어의 갯수. 기본값은 10.
+
+
+
+
