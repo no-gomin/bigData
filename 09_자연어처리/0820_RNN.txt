@@ -1,0 +1,139 @@
+## 1. 문맥을 이용하여 모델만들기
+
+text = """경마장에 있는 말이 뛰고 있다
+그의 말이 법이다
+가는 말이 고와야 오는 말이 곱다"""
+
+from keras_preprocessing.text import Tokenizer
+t = Tokenizer()
+t.fit_on_texts([text])
+encoded = t.texts_to_sequences([text])[0]
+
+
+# text를 학습시키기 위해 ['경마장에 있는', '경마장에 있는 말이, ....]
+sequences = []
+for line in text.split('\n'):
+    encoded = t.texts_to_sequences([line])[0]
+    print('원래 문장 :', line)
+    print('encoded된 문장 :',encoded)
+    for i in range(0, len(encoded)-1): # 시작 index
+        for j in range(i+2, len(encoded)+1): # 끝나는 index
+            sequences.append(encoded[i:j])
+print('sequences와 해석 출력')
+for sequence in sequences:
+    print('[', end='')
+    for word_seq in sequence:
+        for key, value in t.word_index.items():
+            if word_seq == value:
+                print("{}:{}".format(word_seq, key), end=' ')
+    print(']')
+
+
+# sequences를 훈련이 가능하도록 n개열로 조정
+
+maxlen = max([len(s) for s in sequences])    # 최대값으로 n개열 조정
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+sequences = pad_sequences(sequences=sequences, maxlen=maxlen, padding='pre')
+
+
+# 독립변수(X)와 타겟변수(Y)로 분리
+
+X = sequences[:, :-1]
+Y = sequences[:,-1]
+
+
+# 원핫인코딩
+
+from tensorflow.keras.utils import to_categorical
+Y = to_categorical(Y, len(t.word_index)+1)
+
+
+
+
+
+
+
+## 2. 모델 생성하기
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Embedding, SimpleRNN    # 희소행렬변환, RNN
+from tensorflow.keras.layers import Dense
+
+vocab_size = len(t.word_index)
+
+model = Sequential()
+model.add(Embedding(vocab_size+1, vocab_size-1, input_length=X.shape[1]))
+# 희소행렬로 변환 (vocab_size-1은 단어간 거리 벡터, input_length:독립변수 수)
+model.add(SimpleRNN(32))
+model.add(Dense(12, activation='softmax'))
+
+
+
+
+
+
+
+## 3. 모델 학습과정 설정 + 4. 모델 학습시키기
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+hist = model.fit(X, Y, epochs=300, verbose=2)
+
+
+
+
+
+
+## 5. 모델의 학습과정 표시하기
+
+import matplotlib.pyplot as plt
+fig, loss_ax = plt.subplots(figsize=(10,8))
+loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+
+acc_ax = loss_ax.twinx() #loss_ax와 x축을 공유하는 acc_ax 생성
+acc_ax.plot(hist.history['accuracy'], 'g', label='train accuracy')
+loss_ax.set_xlabel('epoch')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('accuracy')
+loss_ax.legend(loc='upper left')
+acc_ax.legend(loc='center right')
+plt.show()
+
+
+
+
+
+
+
+## 모델 사용하기(에측)
+
+def sentence_generation(model, t, current_word, n):
+    init_word = current_word
+    print('입력된 단어 :', init_word)
+    for i in range(1, n+1):
+        encoded = t.texts_to_sequences([current_word])[0]
+        input_data = pad_sequences([encoded], maxlen=5, padding='pre')
+        result = np.argmax(model.predict(input_data))
+        for word, value in t.word_index.items():
+            if result == value:
+                print("{}번째 {}:{}".format(i, word, result))
+                current_word = current_word + ' ' + word
+                break
+    return current_word
+
+sentence_generation(model, t, '가는', 5)
+# 출력 및 반환값 : 
+     입력된 단어 : 가는
+     1번째 말이:1
+     2번째 고와야:9
+     3번째 오는:10
+     4번째 말이:1
+     5번째 곱다:11
+     '가는 말이 고와야 오는 말이 곱다'
+
+
+
+
+
+
+

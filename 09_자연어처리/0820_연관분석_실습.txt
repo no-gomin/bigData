@@ -1,0 +1,16 @@
+## 뉴스기사 실습
+
+news = [ [뉴스1~~~], [뉴스2~~~~]]
+
+rules = apriori(news, min_support=0.2, min_confidence=0.2)
+rules = list(rules) # 리스트로 안 바꾸면 generator 객체
+
+result_df  =  # 데이터프레임으로 저장 [lhs, rhs, support, confidence, lift]
+
+result_df.loc[result_df.lhs.str.contains('올해|지난해') |       # 원하는 조건의 행만 출력
+             result_df.rhs.str.contains('올해|지난해')].sort_values(by=['lift','confidence'],
+                                                               ascending=False).head(100)
+   
+
+
+
