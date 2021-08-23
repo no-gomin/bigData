@@ -1,0 +1,63 @@
+## Django 구성요소
+
+Views : HTTP 요청처리 
+Models : 데이터베이스 처리
+Template : 사용자 인터페이스 처리
+Admin App : 쉬운 DB 레코드 관리 UI
+Static files : 정적 파일 관리
+Media files : 사용자가 업로드한 파일관리
+
+# 패턴
+[ Client ]
+    ↓
+[ View ] ↔ [ Model ] ↔ [ DB ]
+    ↓
+[ Template ] 
+
+
+
+
+
+
+## 개발환경구축
+
+1) pip install Django   (pip install Django --upgrade  /  pip uninstall Django)
+
+2) python –c “import django; print(django.__path__)” --> 설치 위치 확인
+
+
+
+
+
+
+## 설치 폴더에서 cmd창 활용
+
+1) Django-admin startproject ch01   # 프로젝트 생성 (한글 불가)
+
+2) python manage.py runserver    # 서버 실행후 브라우저에서 실행
+
+3 ) python manage.py startapp hello   # 프로젝트 내 애플리케이션 생성
+
+4) 프로젝트 내에 폴더 이름이 동일하니 변경하여 혼동 방지
+
+
+
+
+
+
+## Django 프로세스 구조
+
+[ 1___ client / 브라우저 / request ___ ]
+    ↓ HTTP request + URL 확인
+[ 2___ urls.py ___ ]
+    ↓ 함수 실행
+[ 3___ views.py ___ ] ↔ - DB 처리  ↔ [ 4___ DB / model ___ ]
+    ├→ 직접 응답정보 생성 및 전달 ─────→ [ 1___ client / 브라우저 / request ___ ]
+    ↓  
+[ 5___ templates(*.html) ___ ] 
+    └→ 템플릿으로 응답 정보 생성 및 전달  ──→ [ 1___ client / 브라우저 / request ___ ]
+
+
+
+
+
