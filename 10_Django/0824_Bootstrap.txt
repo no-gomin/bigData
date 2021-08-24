@@ -1,0 +1,25 @@
+## Bootstrap : HTML, CSS, JS 프레임워크
+
+https://getbootstrap.com/
+-> DOC -> CSS 에 있는
+<link~~~> 를 복사
+<script~~~> 를 복사
+
+HTML문서의 <head>의 <title>아래에 복사한 내용을 넣으면, CSS와 JavaScript 사용 가능
+
+
+
+
+
+
+## 직접 만든 CSS
+
+HTML문서의 <head>의 <title>아래에 아래 내용을 삽입
+-> home / static / css / ex.css 사용
+
+{% load static %}
+<link href="{% static 'css/ex.css' %}" rel="stylesheet" type="text/css">
+
+
+
+
