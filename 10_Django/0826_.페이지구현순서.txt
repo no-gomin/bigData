@@ -1,0 +1,20 @@
+## 모든 페이지의 구현 순서
+
+1) URLconf
+
+   ① ch03/urls.py
+   ② students/urls.py
+
+
+2) Views
+
+   ① tudents/views.py
+
+
+3) Templates
+
+   ① Students/templates/students/registerStudent.html
+
+
+
+
