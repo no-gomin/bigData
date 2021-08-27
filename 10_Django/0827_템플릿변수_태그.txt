@@ -1,0 +1,26 @@
+## 탬플릿 언어 : 파이썬 변수, 문법을 html 안에서 쓸 수 있도록 장고에서 제공하는 언어
+
+템플릿 변수 : {{ }}로 구성, 뷰에서 템플릿으로 객체를 전달 할 수 있게 해줌.
+{{ section.title }} : 뷰에서 section 객체를 html 문서로 보내 title 속성을 출력하도록 함.
+
+
+
+
+
+
+## 템플릿 태그 : {% %}로 구성, 주로 반복문과 조건문에 사용
+
+{% for student in student_list %}
+    <li>{{ student.name }}</li>
+{% endfor %}
+
+{% if student_list %}
+    학생 수 : {{ students|length }}
+{% else %}
+    학생이 없어요!
+{% endif %}
+
+
+
+
+
