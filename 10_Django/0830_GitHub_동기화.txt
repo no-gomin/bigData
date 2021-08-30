@@ -1,0 +1,42 @@
+## 기존의 컴퓨터의 깃허브 계정을 삭제하는 방법
+
+제어판\사용자 계정\자격 증명 관리자 -> 일반자격증명에서 제거
+
+
+
+
+
+
+## 깃주소 생성 및 동기화
+
+1. git repository 생성
+    Repository name : ch05_website
+    private 선택
+    Add a README file 선택
+
+2. 내 깃주소 copy
+
+3. c:/big/src/10_Django>git clone https://github.com/~/ch05_website.git 실행 후 파이참으로 open
+
+4. Settings -> Project : ch05_website > Python Interpreter > Add..으로 가상환경 만듦 (Apply-Ok)
+
+5. 가상환경이 잘 만들어졌는지 들어가보기
+    c:/big/src/10_Django/ch05_website>venv\Script\activate.bat 실행
+    (venv) c:/bigdata/src/10_Django/ch05_website>deactivate 실행하면 가상환경을 다시 나옴
+
+6. 필요한 패키지 설치
+   (venv) c:/bigdata/src/10_Django/ch05_website>pip  install django
+                                                                 pip install pillow
+7. .gitignore 파일 작성 후 다음 추가(git 버전관리가 필요없는 폴더 추가 ex.idea:파이참에서 필요한 프로젝트의 가상환경 외 정보들)
+    venv/
+    .idea/
+    *.pyc
+    db.sqlite3
+    migrations/
+
+8. (venv) c:/bigdata/src/10_Django/ch05_website>git add .
+                                                           git commit -m "initial setup 0"
+                                                           git push
+
+9. 현프로젝트를 장고 프로젝트로
+   (venv) c:/bigdata/src/10_Django/ch05_website>django-admin startproject ch05 . ( .은 반드시)
