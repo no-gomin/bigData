@@ -1,0 +1,27 @@
+blog/views.py
+from django.shortcuts import render
+from .models import Post
+from django.views.generic import ListView
+from django.views.generic import DetailView
+
+class PostList(ListView):
+    model = Post
+    def get_queryset(self):
+        return Post.objects.order_by('-created')
+
+# def index(request):
+#     posts = Post.objects.all()
+#     context = {
+#         'posts':posts,
+#     }
+#     return render(request, 'blog/index.html', context)
+
+class PostDetail(DetailView):
+    model = Post
+
+# def post_detail(request, pk):
+#     post = Post.objects.get(pk=pk)
+#     context = {
+#         'post':post,
+#     }
+#     return render(request, 'blog/detail.html', context)
