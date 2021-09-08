@@ -1,0 +1,36 @@
+## 자바 설치 후 기본적으로 포함된 자바를 삭제하거나 우선순위를 변경해 주어야 함
+
+# root 계정으로 들어가서 기존자바를 제거
+[root@localhost]$ rpm –qa|grep java
+[root@localhost]$ yum remove (검색된 자바 네임)
+[root@localhost]$ rpm –qa|grep java
+
+
+# 우선순위를 새로 설치한 자바로 설정
+update-alternatives --config java
+
+
+
+
+
+
+## 자바와 하둡 설치후 환경변수 설정
+
+# 환경변수 설정(.bashrc 파일에 아래 내용 추가)
+– $ vi ~/.bashrc
+export JAVA_HOME=~/jdk1.8.0_181 
+export PATH=$PATH:$JAVA_HOME/bin 
+export HADOOP_HOME=~/hadoop-3.0.3
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# 환경변수 적용
+– $ source ~/.bashrc    # 재부팅 대신
+
+# 설치 확인
+– $ java -version
+– $ hadoop version
+
+
+
+
+
