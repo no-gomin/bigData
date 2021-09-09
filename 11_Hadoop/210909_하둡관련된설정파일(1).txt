@@ -1,0 +1,24 @@
+마스터 노드에서...
+
+$ vi $HADOOP_HOME/etc/hadoop/hadoop-env.sh  
+(모든 노드 필요 : jdk 경로, 클래스 패스, 데몬 실행 옵션 등 설정하는 곳)
+export JAVA_HOME=/home/nova/jdk1.8.0_181     # 중간에 export java 주석처리 된 것을 찾아서 수정
+
+
+$ vi $HADOOP_HOME/etc/hadoop/core-site.xml  
+(모든 노드 : hdfs와 맵리듀스에서 공통적으로 사용할 환경 정보 설정하는 곳 // ex. 하둡의 디폴트 파일 시스템 이름 지정)
+<configuration>       # 중간에 configuration를 찾아서 그안에 넣어줌
+  <!-- file system default name -->
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://master:9000</value>
+  </property>
+</configuration>
+
+
+# 위 작업이 끝난 후 자바와 하둡을 slave(1~3)에 동기화
+$ rsync -a ~/jdk1.8.0_181/ slave1:~/jdk1.8.0_181/       # 1~3 모두
+$ rsync -a ~/hadoop-3.0.3/ slave1:~/hadoop-3.0.3/       # 1~3 모두
+$ rsync -a ~/.bashrc slave1:~/.bashrc        # 1~3 모두
+
+
