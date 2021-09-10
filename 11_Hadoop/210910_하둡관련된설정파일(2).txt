@@ -1,0 +1,149 @@
+## 마스터 노드에서...
+
+
+# vi $HADOOP_HOME/etc/hadoop/hdfs-site.xml 
+(NameNode)
+(HADOOP_HOME 대신 hadoop-3.0.3 으로 해도됨)
+
+<configuration>     # 중간에 configuration를 찾아서 그안에 넣어줌
+  <property>
+    <name>dfs.replication</name>
+    <value>2</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///dfs/name</value>
+  </property>
+  <property>
+    <name>dfs.namenode.edits.dir</name>
+    <value>file:///dfs/edits</value>
+  </property>
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>backup:9868</value>
+  </property>
+</configuration>
+
+
+
+# vi $HADOOP_HOME/etc/hadoop/mapred-site.xml  (NameNode)
+
+<configuration>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+</configuration>
+
+
+# vi $HADOOP_HOME/etc/hadoop/yarn-site.xml (NameNode)
+
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+</configuration>
+
+
+# vi $HADOOP_HOME/etc/hadoop/workers (NameNode)
+
+slave1
+slave2
+slave3
+
+
+
+
+
+
+
+
+
+## 마스터 노드 설정이 끝났으니, 마스터에서 슬레이브를 비밀번호 없이 접근하기 위해 ssh키 생성
+
+ssh-keygen
+cd .ssh
+cp id-rsa.pub authorized_keys
+scp authorized_keys slave1:~/.ssh/authorized_keys     # 1~3까지
+
+ssh slave1    # slave1로 들어가기
+exit   # slave1에서 나오기
+
+
+
+
+
+
+
+
+## 마스터노드에서 이어서...
+
+# vi $HADOOP_HOME/etc/hadoop/hdfs-site.xml (DataNode)
+
+<configuration>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:///dfs/data</value>
+  </property>
+</configuration>
+
+
+# vi $HADOOP_HOME/etc/hadoop/yarn-site.xml (DataNode)
+
+<configuration>
+<!-- Site specific YARN configuration properties -->
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>master</value>
+  </property>
+</configuration>
+
+
+# vi $HADOOP_HOME/etc/hadoop/hdfs-site.xml  
+(SecondaryNameNode)
+(데이터노드이자 세컨더리네임노드인 경우는 위에 소스와 같이 삽입)
+
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>dfs.namenode.checkpoint.dir</name>
+    <value>file:///dfs/namesecondary</value>
+  </property>
+</configuration>
+
+
+
+
+
+
+
+## 네임노드 포맷하기 : 딱!!!! 한번만 해야함!
+
+hdfs namenode -format
+
+딱 한번만 해야함!!!!
+에러 발생시 오탈자를 찾아 수정후 다시 포맷
+
+
+
+
+
+
+## 하둡 클러스터 실행
+
+마스터에서...
+
+start-all.sh    # 켜기
+stop-all.sh    # 끄기
+
+브라우저 통해 확인 master:9870으로 마스터 네임노드 접속하면 상태 확인 가능
+(mater 또는 마스터의 ip 입력)
+
+
+
+
+
+
+
