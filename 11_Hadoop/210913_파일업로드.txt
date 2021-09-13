@@ -1,0 +1,29 @@
+## 하둡 실행 후 파일업로드
+
+$ hdfs dfs -mkdir /airline    # 하둡 클러스터에 /airline 폴더를 생성
+
+$ hdfs dfs -put ~/다운로드/2008.csb /airline   # 다운로드밑 2008.csv를 airline 폴더로 업로드
+
+$ hdfs dfs -ls /airline    # 업로드된 파일 확인
+
+
+
+
+
+
+
+## 업로드 한 파일이 데이터노드에 블럭으로 저장된 것을 확인
+
+Utilities -> Browser the file system에서 파일 시스템을 웹에서 확인 가능
+
+$ ssh slave1     # slave1에서 저장된 블럭을 확인 
+$ cd dfs/data/current/BP-xxx/current/finalized/subdir0/subdir0
+$ ls
+
+slave3의 /dfs/namesecondary 에는 보조네임노드의 파일시스템이미지 사본이 복사되어 있음
+
+
+
+
+
+
