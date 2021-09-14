@@ -1,0 +1,81 @@
+## hdfs dfs 또는 hadoop fs // 2가지 모두 가능
+hdfs dfs -명령어 -옵션 명령행인자
+hadoop fs -명령어 명령행인자 : 1.x 명령
+
+
+
+
+
+
+
+## 명령어
+
+– ls [-d][-h][-R] : 파일 또는 디렉토리 목록
+– du [-s][-h] : 파일 용량 확인
+– cat, text : 파일 내용 보기
+– mkdir [-p] : 디렉토리 생성
+– put, get : 파일 복사(로컬 <-> HDFS)
+– getmerge [-nl] : 병합해서 로컬에 저장(nl은 각 파일 끝에 개행문자 포함)
+– cp, mv : 파일 복사, 이동(HDFS <-> HDFS)
+– rm [-R][-skipTrash] : 파일 삭제, 디렉토리 삭제, 완전 삭제
+– count [-q] : 카운트 값 조회
+– tail : 파일의 마지막 내용 확인
+– chmod, chown, chgrp : 권한, 소유주, 그룹 변경
+– touchz : 0바이트 파일 생성
+– stat [-R] <format> : 통계 정보 조회
+	• 포맷 : %b(바이트수) %F(파일인지디렉토리인지) %u(소유주) %g(그룹) %n(이름) %o(블록크기) %r(복제수) %
+	   y(날짜 및 시간) %Y(유닉스타임스탬프)
+– setrep : 복제 수 변경
+– expunge : 휴지통 비우기
+– test -[edz]: 파일 형식 확인(empty, zero, dir)
+
+
+
+
+
+
+
+
+## 예제
+
+• 사용자의 홈디렉토리를 생성하세요.
+hdfs dfs -mkdir -p /user/nova
+
+• 사용자 홈디렉토리에 airline 디렉토리를 생성하세요.
+hdfs dfs -mkdir airline
+
+• airline 디렉토리에 2008.csv 파일을 업로드 하세요.
+hdfs dfs -put 2008.csv airline/ 
+
+• 로컬의 2008.csv 파일을 삭제하세요.
+rm 2008.csv
+
+• HDFS의 2008.csv 파일을 로컬에 저장하세요.
+hdfs dfs -get airline/2008.csv 
+
+• airline 디렉토리를 삭제하세요.
+hdfs dfs -rm -R airline/
+
+• 루트에 airline 디렉토리를 생성하세요.
+hdfs dfs -mkdir /airline
+
+• /airline 디렉토리에 2008.csv 파일을 업로드 하세요.
+hdfs dfs -put 2008.csv /airline/ 
+
+• 2008.csv 파일의 처음 5라인을 출력하세요.
+hdfs dfs -cat /airline/2008.csv | head -5 
+
+• 2008.csv 파일의 마지막 1KB를 출력하세요.
+hdfs dfs -tail /airline/2008.csv
+
+• 2008.csv 파일의 복제 데이터 개수를 변경하세요.
+hdfs dfs -setrep 1 /airline/2008.csv 
+
+• 2008.csv 파일의 복제 수를 확인하세요.
+hdfs dfs -stat %r /airline/2008.csv 
+
+• 2008.csv 파일의 복제 수를 2로 변경하세요.
+hdfs dfs -setrep 2 /airline/2008.csv
+
+
+

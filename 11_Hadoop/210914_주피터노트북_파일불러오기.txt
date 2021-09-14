@@ -1,0 +1,12 @@
+## 주피터 노트북에서...
+
+import pandas as pd
+import pydoop.hdfs as hd    $ pydoop은 하둡이 설치되어 있어야 함.
+
+with hd.open('wine-quality/winequality-red.csv') as f :
+    redwine = pd.read_csv(f, sep=';')
+
+
+
+
+

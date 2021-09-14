@@ -1,0 +1,72 @@
+## 스파크 : 범용적 목적의 분산 고성능 클러스터링 플랫폼
+
+
+# 설치 : 
+[nova@master ~]$ tar -xf ~/다운로드/spark-2.3.1-bin-hadoop2.7.tgz
+
+
+# 환경설정1 : 
+[nova@master ~]$ cd spark-2.3.1/conf/
+[nova@master conf]$ cp spark-env.sh.template spark-env.sh 
+[nova@master conf]$ vi spark-env.sh
+
+#!/usr/bin/env bash
+export SPARK_DIST_CLASSPATH=$(~/hadoop-3.0.3/bin/hadoop classpath) 
+export JAVA_HOME=~/jdk1.8.0_181
+
+
+# 환경설정2 :
+[nova@master conf]$ cp log4j.properties.template log4j.properties 
+[nova@master conf]$ vi log4j.properties
+
+# Set everything to be logged to the console log4j.roo
+log4j.rootCategory=WARN, console    # INFO를 WARN으로 수정 (경고시에만 로그가 나오도록 수정)
+(그외  로그레벨 : FATAL, ERROR, WARN, INFO, DEBUG, TRACE 순서)
+
+
+
+
+
+
+
+## 실행과 종료 (자바, 파이썬, R등은 스파크 구동 후)
+
+# 스파크
+[nova@master conf]$ ~/spark-2.3.1/bin/pyspark
+>>> quit()
+
+# saprkR
+[nova@master conf]$ ~/spark-2.3.1/bin/sparkR
+> q()
+
+# spark-sql
+[nova@master conf]$ ~/spark-2.3.1/bin/spark-sql
+spark-sql> exit; 
+
+# pyspark
+[nova@master conf]$ ~/spark-2.3.1/bin/pyspark
+>>> quit()
+
+
+
+
+
+
+
+## 주피터 노트북
+
+$ vi .bashrc
+
+export PYSPARK_PYTHON=python3 <---- pyspark에서 python3을 사용하는 경우에만 포함
+export PYSPARK_DRIVER_PYTHON=jupyter
+export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
+
+$ source .bashrc
+
+[nova@master conf]$ ~/spark-2.3.1/bin/pyspark
+
+
+
+
+
+
