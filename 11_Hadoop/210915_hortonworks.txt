@@ -1,0 +1,42 @@
+## VM VirtualBox에 호튼웍스 샌드박스 설치하기
+
+1. 아래 URL에서 다운로드
+http://hortonassets.s3.amazonaws.com/2.1/virtualbox/Hortonworks_Sandbox_2.1.ova
+
+2. 버츄어박스에서 '가상 시스템 가져오기'
+
+3. 가상머신 실행 후 로그인
+
+4. 장치 - 공유폴더 - 공유폴더설정 
+윈도우의 공유폴더를 선택 (ex. wshare)
+자동마운트, 항상사용하기 선택
+mkdir lshare   (리눅스안에 폴더를 만들어줌)
+sudo mount –t vboxsf wshare lshare  (연결시키기, sudo는 관리자 권한 실행이므로 이미 관리자여서 필수는 아님)
+
+
+
+
+
+
+
+## 하둡 명령어 예제
+
+lshare]# hadoop fs –rm –R .Trash 
+-> 삭제 히스토리(휴지통)도 모두 삭제
+
+lshare]# hadoop fs –D dfs.block.size=128000000 –put 2008.csv 2.csv
+-> 개당 블럭 크기를 128000000 으로 지정하면서 put
+
+lshare]# hadoop fsck /user/root/2008.csv 
+-> 블록수 확인
+
+root@sandbox ~]# hadoop fs –get test/data1.txt tmp/
+-> 하둡의 test/data1.txt를 리눅스의 tmp/에 get
+
+root@sandbox ~]# hadoop fs –getmerge test/ lshare/merged.txt 
+-> 하둡의 test/의 데이터들을 병합하여, 리눅스의 lshare/merged.txt로 저장
+
+
+
+
+
