@@ -1,0 +1,43 @@
+## 스쿱에서 액세스하기 위해서는 반드시 주키가 있어야 함.
+
+root@sandbox ~]# mysql 
+(mysql –u root –p 로 들어가야 하는 버전도 있음)
+
+mysql> alter table salaries add column `id` int(10) unsigned primary key auto_increment;
+-> id라는 컬럼을 주키로 생성함
+-> 데이터를 먼저 입력하고 주키를 나중에 넣어야 편함
+-> id는 '가 아닌 `로 감싸야 함(tab위에 있는 ~와 같이 있는 키)
+
+
+
+
+
+
+
+
+## 스쿱을 활용한 수집 (sudo는 관리자권한 로그인시 불필요)
+
+root@sandbox ~]# sudo sqoop import --connect jdbc:mysql://localhost/test --table salaries 
+--username root --target-dir /sqoop_out
+-> mysql에 있는 salaries 테이블을 /sqoop_out으로 가져오기
+
+root@sandbox ~]# hadoop fs –cat /sqoop_out/*
+-> sqoop_out 안에 있는 블럭으로 나뉘어진 모든 파일을 합쳐서 읽기
+
+root@sandbox ~]# hadoop fs –cat /sqoop_out/* > lshare/sqoop_out.csv
+-> 리눅스에 sqoop_out.csv 로 저장하기
+
+root@sandbox ~]# sudo sqoop import-all-tables --connect jdbc:mysql://localhost/test --
+username root --warehouse-dir /sqoop_out2
+-> 특정 테이블이 아닌 test 아래의 모든 테이블 가져오기 (테이블 별로 폴더로 나뉘어 가져옴)
+
+root@sandbox ~]# sudo sqoop import-all-tables --connect jdbc:mysql://localhost/test --
+username root --exclude-tables test3 --warehouse-dir /sqoop_out3 
+-> test3 테이블은 제외한 모든 테이블 가져오기
+
+root@sandbox ~]# sudo sqoop import --connect jdbc:mysql://localhost/test --table salaries 
+--username root --target-dir /sqoop_out4 --where ‘gender=“m”’
+-> salaries 테이블에서 gender가 m인 데이터만 가져오기
+
+
+
