@@ -1,0 +1,105 @@
+1) 데이터 구조를 자세하게 검토할 명령어 제공
+2) 입력 데이터의 대표 부분집합에 대해 표본실행
+
+
+
+
+
+
+## pig 실행 및 기본 명령어
+
+root@sandbox ~]# pig    
+grunt> quit
+
+grunt> mkdir demo
+grunt> copyFromLocal /root/lshare/pigdemo.txt demo/
+pigdemotxt.를 하둡의 demo/ 에 복사
+
+grunt> employees = LOAD 'pigdemo.txt‘ AS (state, name);    # employees 변수에 항목별로 state, name을 열이름으로 적재
+grunt> describe employees;     # 구조를 볼 수 있음
+Grunt> DUMP employees;     # 화면에 보임
+
+grunt> ca_only = FILTER employees BY (state=='CA');    # 조건에 맞는 행만 적재
+
+grunt> emp_group = GROUP employees BY state;     # 그룹별 행으로 적재
+
+grunt> STORE employees INTO ‘emp_csv‘ USING PigStorage(',’);    # emp_csv 폴더아래에 ,를 구분값으로 저장
+
+grunt> aliases;    # 현재 사용중인 변수 확인하기 (pig 종료시 삭제됨 + 필요시 꼭 저장)
+
+root@sandbox lshare]# hadoop fs -cat demo/ca_only/* > ca_only.txt    # 저장된 변수를 파일로 저장
+
+
+
+
+
+
+
+
+
+## pig를 활용한 빅데이터 처리
+
+grunt> visits = LOAD '/user/root/whitehouse/visits.txt‘ USING PigStorage(‘,’);
+grunt> firstten = FOREACH visits GENERATE $0..$9;     # 0~9열만 뽑음
+grunt> firstten_limit = LIMIT firstten 10;      
+grunt> DUMP firstten_limit;
+
+grunt> potus = FILTER visits BY $19 MATCHES ‘POTUS’;    # $19열이 POTUS인 행만 뽑음
+grunt> potus = FILTER visits BY ($19==‘POTUS’);    # 윗 명령어 대신 사용가능
+grunt> potus_limit = LIMIT potus 50;
+grunt> DUMP potus_limit;
+
+grunt> potus_details = FOREACH potus GENERATE     # 구조 선언! 이제 describe 가능
+>> $0 AS lname:chararray,
+>> $1 AS fname:chararray,
+>> $6 AS arrival_time:chararray,
+>> $19 AS visitee:chararray;
+grunt> DESCRIBE potus_details;
+
+grunt> STORE potus_details INTO ‘potus’ USING PigStorage('\t');    # \t로 text 형식처럼 저장
+grunt> STORE potus_details INTO ‘potus_csv’ USING PigStorage(',');   # ,로 csv 형식처럼 저장
+
+root@sandbox ~]# hadoop fs –cat potus/* | tail -10
+root@sandbox ~]# hadoop fs –cat potus/* > lshare/potus.txt
+root@sandbox ~]# hadoop fs –cat potus_csv/* > lshare/potus.csv
+
+
+
+
+
+
+
+
+
+## HIVE에 저장하기 
+
+root@sandbox lshare]# pig 4_wh_comma.pig
+# pig프로그램 실행 (사전 저장된 명령어를 수행 ---> load, filter 등 후에 user/hive/~~~에 저장)
+root@sandbox lshare]# hadoop fs –ls /user/hive/warehouse/wh_comma/
+root@sandbox lshare]# hadoop fs –cat /user/hive/warehouse/wh_comma/* > visits.csv
+root@sandbox lshare]# hadoop fs –mkdir visits_comma
+root@sandbox lshare]# hadoop fs –put visits.csv visits_comma
+
+
+
+# 4_wh_comma.pig 파일내용
+
+visits = LOAD '/user/root/whitehouse/visits.txt' USING PigStorage(',');
+
+potus = FILTER visits BY $19 MATCHES 'POTUS';
+
+project_potus = FOREACH potus GENERATE
+	$0 AS lname:chararray,
+	$1 AS fname:chararray,
+	$6 AS time_of_arrival:chararray,
+	$11 AS appt_scheduled_time:chararray,
+	$21 AS location:chararray,
+	$25 as comment:chararray;
+
+STORE project_potus INTO '/user/hive/warehouse/wh_comma/' USING PigStorage(',');
+
+
+
+
+
+
