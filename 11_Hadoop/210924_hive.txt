@@ -1,0 +1,93 @@
+## hive 실행 및 종료
+
+root@sandbox ~]# hive
+
+hive> quit;    #또는 exit;
+
+
+
+
+
+
+
+
+## hive에서 table 생성, 동시에 데이터 넣기
+
+root@sandbox ~]# hadoop fs –ls /user/hive/warehouse/wh_visits/*
+root@sandbox ~]# hive
+
+hive> create table wh_visits (
+	> lname string,
+	> fname string,
+	> time_of_arrival string,
+	> appt_scheduled_time string,
+	> meeting_location string,
+	> info_comment string)
+	> ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\t‘
+	> LOCATION '/user/hive/warehouse/wh_visits/’;
+hive> show tables;
+hive> describe wh_visits;
+hive> select * from wh_visits limit 10;
+
+# TERMINATED BY ~~~ : txt -> ‘\t‘  /  csv -> ‘,’ 
+
+
+
+
+
+
+
+
+
+## hive에서 table 생성, 이후에 데이터 넣기   (이경우, hive에서 drop table 하면 데이터 폴더 역시 삭제)
+
+hive> create table names (
+	> id int,
+	> name string)
+	> ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\t‘
+	> LOCATION '/user/hive/warehouse/names/’;
+Hive> show tables;
+Hive> describe names;
+hive> select * from names;      # 테이블만 생성한 것이기 때문에 조회되는 데이터 없음
+hive> quit;  
+
+root@sandbox ~]# hadoop fs –mkdir /user/hive/warehouse/names      # 폴더가 자동생성 안되어 있다면 실행
+root@sandbox ~]# hadoop fs –put lshare/5_names.txt /user/hive/warehouse/names/names.txt
+root@sandbox ~]# hive
+
+hive> select * from names;      
+
+# create external table names (  ----> drop table 하여도 names 폴더와 데이터가 남아 있음.)
+
+
+
+
+
+
+
+
+
+## hive에서 SQL문을 이용하여 데이터 조회
+
+hive> select * from wh_visits
+	> where time_of_arrival != ""
+	>order by unix_timestamp(time_of_arrival, 'mm/dd/yyyy hh:mm')
+	>limit 10;
+
+# unix_timestamp : 날짜를 unixtime 으로 변환
+
+
+
+
+
+
+
+
+## 위와 같은 hive 명령문을 미리 파일로 저장해두고 실행하는 것도 가능
+
+root@sandbox ~]# hive –f lshare/5_select.hive   
+
+root@sandbox ~]# hive –f lshare/5_select_names.hive > result.txt      # 실행된 hive 명령문의 결과를 저장
+
+
+
